@@ -6,6 +6,7 @@ ASL made fun
 
 - Ensure you have the Flutter SDK installed on your machine. If not, [Get Flutter here](https://flutter.dev/docs/get-started/install).
 - Set up an emulator (Android/iOS) or have a physical device connected to your machine.
+- Install cocoapods if needed
 - Make sure Git is installed on your machine. If not, [Download Git here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 
 ## Setting Up and Running the Project
@@ -25,14 +26,18 @@ Switch to your project directory:
 ```
 cd playfulingo
 ```
+### 4. check installation
+```
+flutter doctor
+```
 
-### 4. Fetch Dependencies
+### 5. Fetch Dependencies
 Inside the project directory, fetch all necessary dependencies:
 ```
 flutter pub get
 ```
 
-### 5. Run the Flutter App
+### 6. Run the Flutter App
 Finally, build and launch the app on your emulator or connected device:
 ```
 flutter run
