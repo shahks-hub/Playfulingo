@@ -21,13 +21,12 @@ If you're starting fresh and need to create a new Flutter project, use:
 ```
 flutter create playfulingo
 ```
-This command generates a new Flutter project named 'playfulingo'.
 
 ###3. Navigate to the Project Directory
 Switch to your project directory:
 ```
 cd playfulingo
-````
+```
 
 ###4. Fetch Dependencies
 Inside the project directory, fetch all necessary dependencies:
@@ -37,7 +36,6 @@ flutter pub get
 
 ###5. Run the Flutter App
 Finally, build and launch the app on your emulator or connected device:
-
 ```
 flutter run
 ```
