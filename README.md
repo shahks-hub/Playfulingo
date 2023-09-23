@@ -15,26 +15,24 @@ To clone this repository to your local machine, open your terminal and enter:
 ```
 git clone https://github.com/your_username/playfulingo.git
 ```
-
 ### 2. Create a New Flutter Project (Optional)
 If you're starting fresh and need to create a new Flutter project, use:
 ```
 flutter create playfulingo
 ```
-
-###3. Navigate to the Project Directory
+### 3. Navigate to the Project Directory
 Switch to your project directory:
 ```
 cd playfulingo
 ```
 
-###4. Fetch Dependencies
+### 4. Fetch Dependencies
 Inside the project directory, fetch all necessary dependencies:
 ```
 flutter pub get
 ```
 
-###5. Run the Flutter App
+### 5. Run the Flutter App
 Finally, build and launch the app on your emulator or connected device:
 ```
 flutter run
