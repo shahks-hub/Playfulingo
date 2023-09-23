@@ -12,8 +12,7 @@ ASL made fun
 
 ### 1. Clone the Repository
 To clone this repository to your local machine, open your terminal and enter:
-```
-bash
+```bash
 git clone https://github.com/your_username/playfulingo.git
 ```
 
