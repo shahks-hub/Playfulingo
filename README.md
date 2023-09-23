@@ -26,7 +26,7 @@ Switch to your project directory:
 ```
 cd playfulingo
 ```
-### 4. check installation
+### 4. Check installation(This command won't run if flutter is not configured properly, might need to export path then)
 ```
 flutter doctor
 ```
