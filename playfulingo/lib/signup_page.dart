@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:playfulingo/login_prompt.dart';
+import 'package:playfulingo/dash.dart'; // Assuming you've created this file.
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
+
+  @override
+  _SignupPageState createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final nicknameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white, //sets color for the background
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white, //sets background color
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,7 +50,7 @@ class SignupPage extends StatelessWidget {
                           height: 20,
                         ),
                         Text(
-                          "Create an Account, Its free",
+                          "Create an Account, It's free",
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey[700],
@@ -45,17 +58,26 @@ class SignupPage extends StatelessWidget {
                         ),
                         const SizedBox(
                           height: 30,
-                        )
+                        ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Column(
                         children: [
-                          makeInput(label: "Nickname"),
-                          makeInput(label: "Email"),
-                          makeInput(label: "Password", obsureText: true),
-                          makeInput(label: "Confirm Password", obsureText: true)
+                          makeInput(
+                              label: "Nickname",
+                              controller: nicknameController),
+                          makeInput(
+                              label: "Email", controller: emailController),
+                          makeInput(
+                              label: "Password",
+                              obsureText: true,
+                              controller: passwordController),
+                          makeInput(
+                              label: "Confirm Password",
+                              obsureText: true,
+                              controller: confirmPasswordController),
                         ],
                       ),
                     ),
@@ -73,7 +95,37 @@ class SignupPage extends StatelessWidget {
                         child: MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
-                          onPressed: () {},
+                          onPressed: () async {
+                            final email = emailController.text;
+                            final password = passwordController.text;
+                            final confirmPassword =
+                                confirmPasswordController.text;
+
+                            if (password != confirmPassword) {
+                              _showSnackBar(context, "Passwords do not match!");
+                              return;
+                            }
+
+                            try {
+                              final userCredential =
+                                  await _auth.createUserWithEmailAndPassword(
+                                      email: email, password: password);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Dash()));
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'weak-password') {
+                                _showSnackBar(context,
+                                    'The password provided is too weak.');
+                              } else if (e.code == 'email-already-in-use') {
+                                _showSnackBar(context,
+                                    'An account already exists for that email.');
+                              }
+                            } catch (e) {
+                              _showSnackBar(context, e.toString());
+                            }
+                          },
                           color: const Color.fromARGB(255, 255, 151, 82),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40)),
@@ -98,7 +150,7 @@ class SignupPage extends StatelessWidget {
                                 builder: (context) => const LoginPrompt()),
                           );
                         },
-                        child: Text('Login'))
+                        child: const Text('Login'))
                   ],
                 ),
               ],
@@ -108,34 +160,44 @@ class SignupPage extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget makeInput({required String label, bool obsureText = false}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: const TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      TextField(
-        obscureText: obsureText,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(),
-          ),
-          border:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+  void _showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Widget makeInput({
+    required String label,
+    bool obsureText = false,
+    required TextEditingController controller,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
         ),
-      ),
-      const SizedBox(
-        height: 30,
-      )
-    ],
-  );
+        const SizedBox(
+          height: 5,
+        ),
+        TextField(
+          controller: controller,
+          obscureText: obsureText,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(),
+            ),
+            border:
+                OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+          ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+      ],
+    );
+  }
 }
