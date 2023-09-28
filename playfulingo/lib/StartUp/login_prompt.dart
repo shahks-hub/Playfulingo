@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:playfulingo/signup_page.dart';
-import 'package:playfulingo/dash.dart'; // Ensure you've created this file.
+import 'package:playfulingo/StartUp/signup_page.dart';
+import 'package:playfulingo/HomePage/dash.dart'; // Ensure you've created this file.
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPrompt extends StatefulWidget {
@@ -18,7 +18,8 @@ class _LoginPromptState extends State<LoginPrompt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
+        // avoids renderflow for keyboard
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(
           child: Column(
@@ -32,15 +33,15 @@ class _LoginPromptState extends State<LoginPrompt> {
               const SizedBox(height: 30),
               TextField(
                 controller: usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
+                decoration: const InputDecoration(
+                  labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 30),
               TextField(
                 controller: passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
                 ),
