@@ -14,14 +14,13 @@ class _MemoryMatchingGameState extends State<MemoryMatchingGame> {
     "assets/hello.png",
     "assets/hello.png",
     "assets/hello.png",
-    // Add more image file names
+
   ];
 
   List<String> texts = [
     "Text1",
     "Text2",
     "Text3",
-    // Add more text data
   ];
 
   List<String> cards = [];
