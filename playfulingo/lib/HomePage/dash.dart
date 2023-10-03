@@ -3,6 +3,7 @@ import 'package:playfulingo/Augmented_Reality/AR.dart';
 import 'package:playfulingo/Games/game.dart';
 import 'package:playfulingo/Learn_ASL/learn.dart';
 import 'package:playfulingo/gesture_detection/gesture.dart';
+import 'package:gradient_like_css/gradient_like_css.dart';
 
 class DashboardItem extends StatelessWidget {
   final String title;
@@ -35,23 +36,25 @@ class DashboardItem extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(image),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Colors.white.withOpacity(0.5),
-                  BlendMode.lighten,
-                ),
+            image: DecorationImage(
+              image: AssetImage(image),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.5),
+                BlendMode.lighten,
               ),
-              border: Border.all(color: Colors.black, width: 10.0),
-              borderRadius: BorderRadius.circular(20.0)),
+            ),
+            border: Border.all(color: Colors.black, width: 0.0),
+            borderRadius: BorderRadius.circular(20.0),
+            gradient: linearGradient(50, ['blue', 'white', 'red']),
+          ),
           child: Center(
             child: Text(
               title,
               style: const TextStyle(
                 color: Colors.red,
                 fontSize: 35.0,
-                fontStyle: FontStyle.italic,
+                fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.bold,
                 shadows: [
                   Shadow(
@@ -79,29 +82,38 @@ class Dash extends StatelessWidget {
         title: const Text('Playfulingo'),
         backgroundColor: Colors.black,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.count(
-          crossAxisCount: 2, // Two columns
-          mainAxisSpacing: 20.0,
-          crossAxisSpacing: 20.0,
-          children: <Widget>[
-            DashboardItem(
-              title: 'Learn',
-              image: 'assets/learn_bg.png',
-              nextScreen: LearnScreen(),
-            ),
-            DashboardItem(
-                title: 'Practice',
-                image: 'assets/practice.png',
-                nextScreen: GestureScreen()),
-            DashboardItem(
-                title: 'AR', image: 'assets/AR.jpg', nextScreen: ARScreen()),
-            DashboardItem(
-                title: 'Games',
-                image: 'assets/sample_logo.png',
-                nextScreen: GameScreen()),
-          ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          gradient: linearGradient(45, ['red', 'green', 'blue']),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.count(
+            crossAxisCount: 2, // Two columns
+            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 20.0,
+            children: <Widget>[
+              DashboardItem(
+                title: 'Learn',
+                image: 'assets/learn_bg.png',
+                nextScreen: LearnScreen(),
+              ),
+              DashboardItem(
+                  title: 'Practice',
+                  image: 'assets/practice.png',
+                  nextScreen: GestureScreen()),
+              DashboardItem(
+                  title: 'AR',
+                  image: 'assets/arbg.png',
+                  nextScreen: ARScreen()),
+              DashboardItem(
+                  title: 'Games',
+                  image: 'assets/sample_logo.png',
+                  nextScreen: GameScreen()),
+            ],
+          ),
         ),
       ),
     );
