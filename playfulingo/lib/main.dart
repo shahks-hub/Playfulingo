@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:playfulingo/animated_splash.dart';
+import 'package:playfulingo/StartUp/animated_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 

@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:playfulingo/login_prompt.dart';
+import 'package:playfulingo/StartUp/login_prompt.dart';
 
 class AnimatedSplash extends StatelessWidget {
   const AnimatedSplash({super.key});

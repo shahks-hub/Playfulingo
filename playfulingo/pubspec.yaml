@@ -39,6 +39,8 @@ dependencies:
   # video_player: ^2.7.2
   firebase_core: ^2.16.0
   firebase_auth: ^4.10.0
+  gradient_like_css: ^1.0.0
+  
 
 dev_dependencies:
   flutter_test:
