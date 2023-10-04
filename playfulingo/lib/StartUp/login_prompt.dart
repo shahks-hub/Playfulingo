@@ -82,7 +82,7 @@ class _LoginPromptState extends State<LoginPrompt> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                   } catch (e) {
-                    print("Error: $e")
+                    print("Error: $e");
                     final snackBar = SnackBar(
                         content: Text('An error occurred. Please try again.'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
