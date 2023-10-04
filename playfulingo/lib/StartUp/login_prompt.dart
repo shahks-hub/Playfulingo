@@ -41,7 +41,7 @@ class _LoginPromptState extends State<LoginPrompt> {
               const SizedBox(height: 30),
               TextField(
                 controller: passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
                 ),
@@ -59,7 +59,7 @@ class _LoginPromptState extends State<LoginPrompt> {
                       password: password,
                     );
 
-                    final snackBar =
+                    const snackBar =
                         SnackBar(content: Text('Successfully logged in!'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
@@ -82,6 +82,7 @@ class _LoginPromptState extends State<LoginPrompt> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                   } catch (e) {
+                    print("Error: $e")
                     final snackBar = SnackBar(
                         content: Text('An error occurred. Please try again.'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
