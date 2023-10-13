@@ -43,10 +43,7 @@ Finally, build and launch the app on your emulator or connected device:
 flutter run
 ```
 
-### 7. For android go to the Playfulingo firebase console:
-next look for the android app and go to settings and download the google.json file and place it in your flutter projects android/ folder. 
 
-### 8. next run flutter pub get
 
 
 
