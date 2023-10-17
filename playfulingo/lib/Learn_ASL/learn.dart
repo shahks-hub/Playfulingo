@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'abctutorial/ABCtutorial.dart';
 
 class LearnScreen extends StatelessWidget {
   @override
@@ -23,6 +24,15 @@ class LearnScreen extends StatelessWidget {
               },
               child: Text('Go Back'),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  // Navigate to ABCtutorial screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AbcTutorial()),
+                  );
+                },
+                child: Text('Go to ABC tutorial')),
           ],
         ),
       ),
