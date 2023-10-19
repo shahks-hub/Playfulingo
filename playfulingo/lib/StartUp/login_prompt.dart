@@ -76,15 +76,14 @@ class _LoginPromptState extends State<LoginPrompt> {
                               Text('Wrong password provided for that user.'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
-                      final snackBar = SnackBar(
-                          content:
-                              Text('An error occurred. Please try again.'));
+                      final snackBar =
+                          SnackBar(content: Text('An error occurred: $e'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                   } catch (e) {
                     print("Error: $e");
-                    final snackBar = SnackBar(
-                        content: Text('An error occurred. Please try again.'));
+                    final snackBar =
+                        SnackBar(content: Text('An error occurred: $e'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
