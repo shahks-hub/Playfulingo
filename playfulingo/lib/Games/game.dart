@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:playfulingo/Learn_ASL/flashcard.dart';
 import 'package:playfulingo/Games/multiple_choice.dart';
-import 'package:playfulingo/Games/memory_matching.dart';
+import 'package:playfulingo/Games/yes_no.dart';
 
 class GameItem extends StatelessWidget {
   final String title;
@@ -97,9 +97,9 @@ class GameScreen extends StatelessWidget {
                 nextScreen: FlashcardScreen(flashcards: flashcards)
             ),
             GameItem(
-                title: 'Memory Matching',
-                image: 'assets/memory-matching.png',
-                nextScreen: MemoryMatchingGame()
+                title: 'yes_or_no',
+                image: 'assets/yes_or_no.png',
+                nextScreen: YesNoGame()
             ),
           ],
         ),
