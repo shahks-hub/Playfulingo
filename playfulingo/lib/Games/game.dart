@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:playfulingo/Learn_ASL/flashcard.dart';
+import 'package:playfulingo/Games/fill_in_the_blanks.dart';
 import 'package:playfulingo/Games/multiple_choice.dart';
 import 'package:playfulingo/Games/yes_no.dart';
 
@@ -92,9 +92,9 @@ class GameScreen extends StatelessWidget {
               nextScreen: multipleChoice(),
             ),
             GameItem(
-                title: 'Flashcard',
-                image: 'assets/flashcard.png',
-                nextScreen: FlashcardScreen(flashcards: flashcards)
+                title: 'Fill In The Blanks',
+                image: 'assets/fill_in_the blank.png',
+                nextScreen: FillInTheBlank()
             ),
             GameItem(
                 title: 'yes_or_no',

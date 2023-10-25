@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:playfulingo/Learn_ASL/flashcard.dart';
 import 'abtutorial.dart';
 
 class LearnScreen extends StatelessWidget {
@@ -33,6 +34,15 @@ class LearnScreen extends StatelessWidget {
                   );
                 },
                 child: const Text('Go to ABC tutorial')),
+            ElevatedButton(
+                onPressed: () {
+                  // Navigate to ABCtutorial screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FlashcardScreen(flashcards: flashcards)),
+                  );
+                },
+                child: const Text('Go to ABC flashcards')),
           ],
         ),
       ),
