@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1010049478620",
+    "firebase_url": "https://playfulingo-default-rtdb.firebaseio.com",
+    "project_id": "playfulingo",
+    "storage_bucket": "playfulingo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010049478620:android:8109fb21d758f910f62919",
+        "android_client_info": {
+          "package_name": "com.example.playfulingo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjuyrQKy8Dg7aMSFjTTK0dZuE--3VO8SA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
