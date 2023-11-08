@@ -41,6 +41,8 @@ dependencies:
   firebase_auth: ^4.10.0
   gradient_like_css: ^1.0.0
   youtube_player_flutter: ^8.0.0
+  image_picker: ^1.0.4
+  tflite: ^1.1.2
   
 
 dev_dependencies:
