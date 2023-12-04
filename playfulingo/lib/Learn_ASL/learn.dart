@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:playfulingo/Learn_ASL/flashcard.dart';
 import 'abtutorial.dart';
 import 'abcvideo.dart';
+import 'simpleaslvideo.dart';
 
 class LearnScreen extends StatelessWidget {
   @override
@@ -80,34 +81,65 @@ class LearnScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // SizedBox(height: 10.0),
-              // GestureDetector(
-              //   onTap: () {
-              //     // Navigator.push(
-              //     //   context,
-              //     //   // MaterialPageRoute(builder: (context) => AbcVideoPage()),
-              //     // );
-              //   },
-                // child: Container(
-                //   width: 200,
-                //   height: 100,
-                //   decoration: BoxDecoration(
-                //     color: Colors.white,
-                //     border: Border.all(color: Colors.black, width: 10.0),
-                //     borderRadius: BorderRadius.circular(20.0),
-                //   ),
-                  // child: Center(
-                  //   child: Text(
-                  //     'ABC Video',
-                  //     style: TextStyle(
-                  //       color: Colors.red,
-                  //       fontSize: 24.0,
-                  //       fontWeight: FontWeight.bold,
-                  //     ),
-                  //   ),
-                  // ),
-               // ),
-             // ),
+              /////////
+              SizedBox(height: 10.0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AbcVideoPage()),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black, width: 10.0),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'ABC Video',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+               ),
+             ),
+             ////
+             SizedBox(height: 10.0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BasicASLvideo()),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black, width: 10.0),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Learn ASL Basics in 7 minutes',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+               ),
+             ),
+             /////
             ],
           ),
         ),
