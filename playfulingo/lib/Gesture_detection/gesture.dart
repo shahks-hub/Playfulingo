@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'alphabet_prac.dart';// Import your alphabet practice screen
 
 class GestureScreen extends StatelessWidget {
   @override
@@ -14,6 +15,17 @@ class GestureScreen extends StatelessWidget {
             Text(
               'Welcome to Gesture Screen!',
               style: TextStyle(fontSize: 20.0),
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to the Alphabet Practice Screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CameraScreen()), // Replace with your Alphabet Practice Screen widget
+                );
+              },
+              child: Text('Go to Alphabet Practice'),
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
