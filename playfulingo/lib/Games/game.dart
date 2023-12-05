@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:playfulingo/Games/fill_in_the_blanks.dart';
 import 'package:playfulingo/Games/multiple_choice.dart';
 import 'package:playfulingo/Games/yes_no.dart';
+import 'alphabet_match.dart';
+
 
 class GameItem extends StatelessWidget {
   final String title;
@@ -101,6 +103,11 @@ class GameScreen extends StatelessWidget {
                 image: 'assets/yes_or_no.png',
                 nextScreen: YesNoGame()
             ),
+            GameItem(
+              title: 'Alphabet Drag and Drop Match',
+              image: 'assets/yes_or_no.png',
+              nextScreen: ASLMatchingGame()
+            )
           ],
         ),
       ),
