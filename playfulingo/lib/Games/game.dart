@@ -4,6 +4,7 @@ import 'package:playfulingo/Games/multiple_choice.dart';
 import 'package:playfulingo/Games/yes_no.dart';
 import 'alphabet_match.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
+import 'alphabet_prac.dart';
 
 
 class GameItem extends StatelessWidget {
@@ -101,7 +102,7 @@ class GameScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          gradient: linearGradient(45, ['blue', 'green', 'blue']),
+          gradient: linearGradient(45, ['blue', 'green', 'red']),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -129,7 +130,12 @@ class GameScreen extends StatelessWidget {
               title: 'Alphabet Drag Drop Match',
               image: 'assets/flashcard.png',
               nextScreen: ASLMatchingGame()
-            )
+            ),
+              GameItem(
+                title: 'Snap recog',
+                image: 'assets/fill_in_the blank.png',
+                nextScreen: CameraScreen()
+            ),
             ],
           ),
         ),

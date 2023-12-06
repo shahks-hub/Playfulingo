@@ -41,17 +41,19 @@ class _AbcTutorialState extends State<AbcTutorial> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple[100],
          iconTheme: IconThemeData(
       color: Colors.blue, // Change the color of the back arrow here
     ),
         title: const Text(
           'Tap to see a sign', 
           style: TextStyle(
-            color: Colors.orange,
+            color: Colors.purple,
             fontSize: 30.0,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
             ),),),
+            
         
       
       body: Column(
@@ -79,8 +81,8 @@ class _AbcTutorialState extends State<AbcTutorial> {
                   },
                   child: Card(
                      color: selectedAlphabet == alphabets[index]
-                    ? Colors.orange // Change the color based on selection
-                        : Colors.blue, // Default color for unselected items
+                    ? Colors.purple[100] // Change the color based on selection
+                        : Colors.pink[800], // Default color for unselected items
                     child: Center(
                       child: Text(
                         alphabets[index],

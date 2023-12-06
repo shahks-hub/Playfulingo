@@ -26,7 +26,7 @@ class _BasicASLvideoState extends State<BasicASLvideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       backgroundColor: Colors.green,
+       backgroundColor: Colors.pink[300],
          iconTheme: IconThemeData(
       color: Colors.white, // Change the color of the back arrow here
     ),

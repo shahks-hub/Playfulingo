@@ -18,22 +18,25 @@ class DashboardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          // Navigate to the desired screen when the button is pressed
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => nextScreen,
-            ),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+      onPressed: () {
+        // Navigate to the desired screen when the button is pressed
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => nextScreen,
           ),
-          backgroundColor: Colors.white,
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
+        backgroundColor: Colors.transparent, // Change to a transparent background
+      ),
+      child: Center(
         child: Container(
+          height: 500, // Adjust the height of the grid items
+          width: 200, // Adjust the width of the grid items
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(image),
@@ -65,32 +68,31 @@ class DashboardItem extends StatelessWidget {
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
 
 
 class Dash extends StatelessWidget {
-  const Dash({super.key});
+  const Dash({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       appBar: AppBar(
-   
         title: const Text(
-          'Playfulingo', 
+          'Playfulingo',
           style: TextStyle(
             color: Colors.orange,
             fontSize: 35.0,
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold,
-            ),
-          
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        backgroundColor: Colors.black
+        backgroundColor: Colors.black,
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -99,24 +101,27 @@ class Dash extends StatelessWidget {
           gradient: linearGradient(45, ['blue', 'black', 'purple']),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: GridView.count(
             crossAxisCount: 2, // Two columns
             mainAxisSpacing: 20.0,
             crossAxisSpacing: 20.0,
+            childAspectRatio: 0.3, // Adjust the aspect ratio of the grid items
             children: <Widget>[
-              DashboardItem(
-                title: 'Learn',
-                image: 'assets/learn_bg.png',
-                nextScreen: Learn()),
-              DashboardItem(
-                  title: 'Practice',
-                  image: 'assets/practice.png',
-                  nextScreen: GestureScreen()),
-              DashboardItem(
+              Center(
+                child: DashboardItem(
+                  title: 'Learn',
+                  image: 'assets/learn_bg.png',
+                  nextScreen: Learn(),
+                ),
+              ),
+              Center(
+                child: DashboardItem(
                   title: 'Games',
                   image: 'assets/multiple-choice.png',
-                  nextScreen: GameScreen()),
+                  nextScreen: GameScreen(),
+                ),
+              ),
             ],
           ),
         ),
