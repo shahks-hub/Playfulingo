@@ -3,143 +3,118 @@ import 'package:playfulingo/Learn_ASL/flashcard.dart';
 import 'abtutorial.dart';
 import 'abcvideo.dart';
 import 'simpleaslvideo.dart';
+import 'package:gradient_like_css/gradient_like_css.dart';
 
-class LearnScreen extends StatelessWidget {
+class LearnboardItem extends StatelessWidget {
+  final String title;
+  final String image;
+  final Widget nextScreen;
+
+  const LearnboardItem(
+      {super.key,
+      required this.title,
+      required this.image,
+      required this.nextScreen});
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return ElevatedButton(
+      onPressed: () {
+        // Navigate to the desired screen when the button is pressed
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => nextScreen,
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(image),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.5),
+              BlendMode.lighten,
+            ),
+          ),
+          border: Border.all(color: Colors.black, width: 0.0),
+          borderRadius: BorderRadius.circular(20.0),
+          gradient: LinearGradient(
+            colors: [Colors.blue, Colors.white, Colors.red],
+          ),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.red,
+              fontSize: 35.0,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.bold,
+              shadows: [
+                Shadow(
+                  blurRadius: 4.0,
+                  color: Colors.black,
+                  offset: Offset(2.0, 2.0),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class Learn extends StatelessWidget {
+  const Learn({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Learn Screen'),
+        title: const Text('Welcome to learning ! '),
         backgroundColor: Colors.black,
       ),
       body: Container(
-        color: Colors.white,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          gradient: linearGradient(45, ['red', 'green', 'blue']),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.count(
+            crossAxisCount: 2, // Two columns
+            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 20.0,
             children: <Widget>[
-              Text(
-                'Welcome to Learn Screen!',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.red,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AbcTutorial()),
-                  );
-                },
-                child: Container(
-                  width: 200,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 10.0),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'ABC tutorial',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FlashcardScreen(flashcards: flashcards)),
-                  );
-                },
-                child: Container(
-                  width: 200,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 10.0),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'ABC flashcards',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              /////////
-              SizedBox(height: 10.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AbcVideoPage()),
-                  );
-                },
-                child: Container(
-                  width: 200,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 10.0),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'ABC Video',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-               ),
-             ),
-             ////
-             SizedBox(height: 10.0),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BasicASLvideo()),
-                  );
-                },
-                child: Container(
-                  width: 200,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 10.0),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Learn ASL Basics in 7 minutes',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-               ),
-             ),
-             /////
+              LearnboardItem(
+                title: 'Abctutorial',
+                image: 'assets/learn_bg.png',
+                nextScreen: AbcTutorial()),
+              LearnboardItem(
+                  title: 'abc video',
+                  image: 'assets/practice.png',
+                  nextScreen: AbcVideoPage()),
+              LearnboardItem(
+                  title: 'basic asl video',
+                  image: 'assets/arbg.png',
+                  nextScreen: BasicASLvideo()),
+              LearnboardItem(
+                  title: 'flash card',
+                  image: 'assets/sample_logo.png',
+                  nextScreen: FlashcardScreen(flashcards: flashcards)),
             ],
           ),
         ),
@@ -147,3 +122,4 @@ class LearnScreen extends StatelessWidget {
     );
   }
 }
+

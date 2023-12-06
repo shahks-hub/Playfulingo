@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:playfulingo/Augmented_Reality/AR.dart';
 import 'package:playfulingo/Games/game.dart';
 import 'package:playfulingo/Learn_ASL/learn.dart';
 import 'package:playfulingo/gesture_detection/gesture.dart';
@@ -98,16 +97,11 @@ class Dash extends StatelessWidget {
               DashboardItem(
                 title: 'Learn',
                 image: 'assets/learn_bg.png',
-                nextScreen: LearnScreen(),
-              ),
+                nextScreen: Learn()),
               DashboardItem(
                   title: 'Practice',
                   image: 'assets/practice.png',
                   nextScreen: GestureScreen()),
-              DashboardItem(
-                  title: 'AR',
-                  image: 'assets/arbg.png',
-                  nextScreen: ARScreen()),
               DashboardItem(
                   title: 'Games',
                   image: 'assets/sample_logo.png',
