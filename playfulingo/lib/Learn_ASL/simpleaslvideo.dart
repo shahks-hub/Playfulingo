@@ -26,7 +26,18 @@ class _BasicASLvideoState extends State<BasicASLvideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Learn basic ASL in 7 minutes'),
+       backgroundColor: Colors.green,
+         iconTheme: IconThemeData(
+      color: Colors.white, // Change the color of the back arrow here
+    ),
+        title: const Text(
+          'ASL basics', 
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),),
       ),
       body: Center(
         child: YoutubePlayerBuilder(

@@ -40,13 +40,27 @@ class _AbcTutorialState extends State<AbcTutorial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Learn ABCs')),
+      appBar: AppBar(
+         iconTheme: IconThemeData(
+      color: Colors.blue, // Change the color of the back arrow here
+    ),
+        title: const Text(
+          'Tap to see a sign', 
+          style: TextStyle(
+            color: Colors.orange,
+            fontSize: 30.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),),),
+        
+      
       body: Column(
         children: [
           Expanded(
             flex: 2,
             child: Center(
               // Display image of selected alphabet
+              
               child: Image.asset('assets/sign_pics/$selectedAlphabet.PNG'),
             ),
           ),
@@ -64,10 +78,18 @@ class _AbcTutorialState extends State<AbcTutorial> {
                     });
                   },
                   child: Card(
+                     color: selectedAlphabet == alphabets[index]
+                    ? Colors.orange // Change the color based on selection
+                        : Colors.blue, // Default color for unselected items
                     child: Center(
                       child: Text(
                         alphabets[index],
-                        style: const TextStyle(fontSize: 40),
+                        style:  TextStyle(
+                          fontSize: 40,
+                          color: selectedAlphabet == alphabets[index]
+                              ? Colors.black // Change the text color based on selection
+                              : Colors.white, // Default color for unselected items
+                          ),
                       ),
                     ),
                   ),

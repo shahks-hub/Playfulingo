@@ -114,11 +114,11 @@ class Learn extends StatelessWidget {
                 image: 'assets/learn_bg.png',
                 nextScreen: AbcTutorial()),
               LearnboardItem(
-                  title: 'abc video',
+                  title: 'ABC video',
                   image: 'assets/practice.png',
                   nextScreen: AbcVideoPage()),
               LearnboardItem(
-                  title: 'basic asl video',
+                  title: 'ASL basics video',
                   image: 'assets/arbg.png',
                   nextScreen: BasicASLvideo()),
               LearnboardItem(

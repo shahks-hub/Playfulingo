@@ -25,10 +25,22 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ABC Video'),
-      ),
+       appBar: AppBar(
+       backgroundColor: Colors.green,
+         iconTheme: IconThemeData(
+      color: Colors.white, // Change the color of the back arrow here
+    ),
+        title: const Text(
+          'ABC Video', 
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),),),
+      
       body: Center(
+         
         child: YoutubePlayerBuilder(
           player: YoutubePlayer(
             controller: _controller,
@@ -43,6 +55,7 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
           ),
           builder: (context, player) {
             return Column(
+              
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 player,
