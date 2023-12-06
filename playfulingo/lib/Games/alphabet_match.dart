@@ -63,34 +63,65 @@ class _ASLMatchingGameState extends State<ASLMatchingGame> {
       pageCount,
       (index) => letterData.keys.skip(index * itemsPerPage).take(itemsPerPage).toList(),
     );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Score: ${score.length} / ${letterData.length}'),
-        backgroundColor: Colors.green,
+ return Scaffold(
+    appBar: AppBar(
+      iconTheme: IconThemeData(
+        color: Colors.white, // Change the color of the back arrow here
       ),
-      body: Stack(
+      title: Text(
+        'Score: ${score.length} / ${letterData.length}',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 30.0,
+          fontStyle: FontStyle.italic,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: Colors.purple[800],
+    ),
+    body: Container(
+      color: Colors.pink[100], // Replace this with your preferred background color
+      child: Column(
         children: [
-          PageView.builder(
-            controller: _pageController,
-            itemCount: pageCount,
-            onPageChanged: (int index) {
-              setState(() {
-                currentPageIndex = index;
-              });
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return _buildPage(pages[index]);
-            },
+          SizedBox(height: 20), // Add spacing between the app bar and text
+          Text(
+            'Drag and Drop to Match',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.pink[500],
+            ),
           ),
-          _buildNextPageButton(),
+          Expanded(
+            child: Center(
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    controller: _pageController,
+                    itemCount: pageCount,
+                    onPageChanged: (int index) {
+                      setState(() {
+                        currentPageIndex = index;
+                      });
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      return _buildPage(pages[index]);
+                    },
+                  ),
+                  _buildNextPageButton(),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildPage(List<String> pageLetters) {
-    return SingleChildScrollView(
+  return SingleChildScrollView(
+    child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -116,40 +147,60 @@ class _ASLMatchingGameState extends State<ASLMatchingGame> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Widget _buildDragTarget(String letter) {
-    return DragTarget<String>(
-      builder: (BuildContext context, List<String?> incoming, List<dynamic> rejected) {
-        if (score.containsKey(letter) && score[letter] == true) {
-          return Container(
-            color: Colors.white,
-            child: Text('Correct!'),
-            alignment: Alignment.center,
-            height: 80,
-            width: 100,
-          );
-        } else {
-          return Container(
-            color: Colors.blueGrey,
-            height: 80,
-            width: 100,
-            child: Text(letter),
-            alignment: Alignment.center,
-          );
-        }
-      },
-      onWillAccept: (data) => data == letter,
-      onAccept: (data) {
-        setState(() {
-          score[letter] = true;
-          _checkAndNavigate();
-        });
-      },
-      onLeave: (data) {},
-    );
-  }
+Widget _buildDragTarget(String letter) {
+  return DragTarget<String>(
+    builder: (BuildContext context, List<String?> incoming, List<dynamic> rejected) {
+      if (score.containsKey(letter) && score[letter] == true) {
+        return Container(
+          color: Colors.pink[500],
+          child: Center(
+            child: Text(
+              'Correct!',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          alignment: Alignment.center,
+          height: 100,
+          width: 100,
+        );
+      } else {
+        return Container(
+          color: Colors.purple[400],
+          height: 100,
+          width: 100,
+          child: Center(
+            child: Text(
+              letter,
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          alignment: Alignment.center,
+        );
+      }
+    },
+    onWillAccept: (data) => data == letter,
+    onAccept: (data) {
+      setState(() {
+        score[letter] = true;
+        _checkAndNavigate();
+      });
+    },
+    onLeave: (data) {},
+  );
+}
+
 
   void _checkAndNavigate() {
     final int pageCount = (letterData.length / itemsPerPage).ceil();
@@ -207,11 +258,11 @@ class ASLImage extends StatelessWidget {
       color: Colors.transparent,
       child: Container(
         alignment: Alignment.center,
-        height: 50,
-        padding: EdgeInsets.all(10),
+        height: 400,
+        padding: EdgeInsets.all(1),
         child: Image.asset(
           imagePath,
-          height: 100,
+          height: 150,
           width: 100,
         ),
       ),
