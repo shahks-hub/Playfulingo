@@ -54,7 +54,9 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('ASL Flashcards'),
+        backgroundColor: Colors.blue,
       ),
+      backgroundColor: const Color.fromARGB(255, 33, 208, 243),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -200,3 +200,101 @@ class GameItem extends StatelessWidget {
   }
 }
 
+
+
+class GameScreen extends StatelessWidget {
+  const GameScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+         iconTheme: IconThemeData(
+      color: Colors.blue, // Change the color of the back arrow here
+    ),
+        title: const Text(
+          'Practice make perfect', 
+          style: TextStyle(
+            color: Colors.orange,
+            fontSize: 30.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),),
+        backgroundColor: Colors.black,
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          gradient: linearGradient(45, ['blue', 'green', 'red']),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.count(
+            crossAxisCount: 2, // Two columns
+            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 20.0,
+            children: <Widget>[
+               const GameItem(
+              title: 'Multiple Choice',
+              image: 'assets/multiple-choice.png',
+              nextScreen: multipleChoice(),
+            ),
+            GameItem(
+                title: 'Fill In The Blanks',
+                image: 'assets/fill_in_the blank.png',
+                nextScreen: FillInTheBlank()
+            ),
+            GameItem(
+                title: 'yes_or_no',
+                image: 'assets/yes_or_no.png',
+                nextScreen: YesNoGame()
+            ),
+            GameItem(
+              title: 'Alphabet Drag Drop Match',
+              image: 'assets/flashcard.png',
+              nextScreen: ASLMatchingGame()
+            ),
+              GameItem(
+                title: 'Snap and Prac',
+                image: 'assets/learn_bg.png',
+                nextScreen: CameraScreen()
+            ),
+         
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Dash(),
+                  ),
+                );
+              },
+              child: Text(
+                'Go back to homepage', 
+                style: TextStyle(
+                fontSize: 20,
+                
+              ),
+                  
+              ),
+              style: ElevatedButton.styleFrom(
+    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12), // Button padding
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(80), // Button border shape
+    ),
+    primary: Colors.orange[300], // Background color
+    onPrimary: Colors.blue, // Text color
+  ),
+),
+            
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
