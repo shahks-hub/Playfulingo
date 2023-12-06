@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:playfulingo/Augmented_Reality/AR.dart';
 import 'package:playfulingo/Games/game.dart';
 import 'package:playfulingo/Learn_ASL/learn.dart';
-import 'package:playfulingo/gesture_detection/gesture.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
 
 class DashboardItem extends StatelessWidget {
@@ -19,22 +17,25 @@ class DashboardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          // Navigate to the desired screen when the button is pressed
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => nextScreen,
-            ),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+      onPressed: () {
+        // Navigate to the desired screen when the button is pressed
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => nextScreen,
           ),
-          backgroundColor: Colors.white,
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
+        backgroundColor: Colors.transparent, // Change to a transparent background
+      ),
+      child: Center(
         child: Container(
+          height: 500, // Adjust the height of the grid items
+          width: 200, // Adjust the width of the grid items
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(image),
@@ -66,52 +67,60 @@ class DashboardItem extends StatelessWidget {
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
-// need to add settings option
+
 
 class Dash extends StatelessWidget {
-  const Dash({super.key});
+  const Dash({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Playfulingo'),
+        title: const Text(
+          'Playfulingo',
+          style: TextStyle(
+            color: Colors.orange,
+            fontSize: 35.0,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Colors.black,
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          gradient: linearGradient(45, ['red', 'green', 'blue']),
+          gradient: linearGradient(45, ['blue', 'purple', 'orange']),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: GridView.count(
             crossAxisCount: 2, // Two columns
             mainAxisSpacing: 20.0,
             crossAxisSpacing: 20.0,
+            childAspectRatio: 0.3, // Adjust the aspect ratio of the grid items
             children: <Widget>[
-              DashboardItem(
-                title: 'Learn',
-                image: 'assets/learn_bg.png',
-                nextScreen: LearnScreen(),
+              Center(
+                child: DashboardItem(
+                  title: 'Learn',
+                  image: 'assets/learn_bg.png',
+                  nextScreen: Learn(),
+                ),
               ),
-              DashboardItem(
-                  title: 'Practice',
-                  image: 'assets/practice.png',
-                  nextScreen: GestureScreen()),
-              DashboardItem(
-                  title: 'AR',
-                  image: 'assets/arbg.png',
-                  nextScreen: ARScreen()),
-              DashboardItem(
+              Center(
+                child: DashboardItem(
                   title: 'Games',
-                  image: 'assets/sample_logo.png',
-                  nextScreen: GameScreen()),
+                  image: 'assets/multiple-choice.png',
+                  nextScreen: GameScreen(),
+                ),
+              ),
             ],
           ),
         ),

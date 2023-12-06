@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class AbcVideoPage extends StatefulWidget {
+class BasicASLvideo extends StatefulWidget {
   @override
-  _AbcVideoPageState createState() => _AbcVideoPageState();
+  _BasicASLvideoState createState() => _BasicASLvideoState();
 }
 
-class _AbcVideoPageState extends State<AbcVideoPage> {
+class _BasicASLvideoState extends State<BasicASLvideo> {
   late YoutubePlayerController _controller;
 
   @override
@@ -14,7 +14,7 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
     super.initState();
 
     _controller = YoutubePlayerController(
-      initialVideoId: 'T4FKufhMc44',
+      initialVideoId: '0FcwzMq4iWg',
       flags: YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
@@ -25,22 +25,21 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-       backgroundColor: Colors.purple[300],
+      appBar: AppBar(
+       backgroundColor: Colors.pink[300],
          iconTheme: IconThemeData(
       color: Colors.white, // Change the color of the back arrow here
     ),
         title: const Text(
-          'ABC Video', 
+          'ASL basics', 
           style: TextStyle(
             color: Colors.white,
             fontSize: 30.0,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
-            ),),),
-      
+            ),),
+      ),
       body: Center(
-         
         child: YoutubePlayerBuilder(
           player: YoutubePlayer(
             controller: _controller,
@@ -55,7 +54,6 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
           ),
           builder: (context, player) {
             return Column(
-              
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 player,
