@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'game.dart';
 
 class ASLMatchingGame extends StatefulWidget {
   @override
@@ -12,29 +13,29 @@ class _ASLMatchingGameState extends State<ASLMatchingGame> {
     'A': 'assets/sign_pics/A.PNG',
     'B': 'assets/sign_pics/B.PNG',
     'C': 'assets/sign_pics/C.PNG',
-    'D': 'assets/sign_pics/D.PNG',
-    'E': 'assets/sign_pics/E.PNG',
-    'F': 'assets/sign_pics/F.PNG',
-    'G': 'assets/sign_pics/G.PNG',
-    'H': 'assets/sign_pics/H.PNG',
-    'I': 'assets/sign_pics/I.PNG',
-    'J': 'assets/sign_pics/J.PNG',
-    'K': 'assets/sign_pics/K.PNG',
-    'L': 'assets/sign_pics/L.PNG',
-    'M': 'assets/sign_pics/M.PNG',
-    'N': 'assets/sign_pics/N.PNG',
-    'O': 'assets/sign_pics/O.PNG',
-    'P': 'assets/sign_pics/P.PNG',
-    'Q': 'assets/sign_pics/Q.PNG',
-    'R': 'assets/sign_pics/R.PNG',
-    'S': 'assets/sign_pics/S.PNG',
-    'T': 'assets/sign_pics/T.PNG',
-    'U': 'assets/sign_pics/U.PNG',
-    'V': 'assets/sign_pics/V.PNG',
-    'W': 'assets/sign_pics/W.PNG',
-    'X': 'assets/sign_pics/X.PNG',
-    'Y': 'assets/sign_pics/Y.PNG',
-    'Z': 'assets/sign_pics/Z.PNG'
+    // 'D': 'assets/sign_pics/D.PNG',
+    // 'E': 'assets/sign_pics/E.PNG',
+    // 'F': 'assets/sign_pics/F.PNG',
+    // 'G': 'assets/sign_pics/G.PNG',
+    // 'H': 'assets/sign_pics/H.PNG',
+    // 'I': 'assets/sign_pics/I.PNG',
+    // 'J': 'assets/sign_pics/J.PNG',
+    // 'K': 'assets/sign_pics/K.PNG',
+    // 'L': 'assets/sign_pics/L.PNG',
+    // 'M': 'assets/sign_pics/M.PNG',
+    // 'N': 'assets/sign_pics/N.PNG',
+    // 'O': 'assets/sign_pics/O.PNG',
+    // 'P': 'assets/sign_pics/P.PNG',
+    // 'Q': 'assets/sign_pics/Q.PNG',
+    // 'R': 'assets/sign_pics/R.PNG',
+    // 'S': 'assets/sign_pics/S.PNG',
+    // 'T': 'assets/sign_pics/T.PNG',
+    // 'U': 'assets/sign_pics/U.PNG',
+    // 'V': 'assets/sign_pics/V.PNG',
+    // 'W': 'assets/sign_pics/W.PNG',
+    // 'X': 'assets/sign_pics/X.PNG',
+    // 'Y': 'assets/sign_pics/Y.PNG',
+    // 'Z': 'assets/sign_pics/Z.PNG'
   };
 
   int seed = 0;
@@ -215,11 +216,11 @@ Widget _buildDragTarget(String letter) {
       });
     } else if (isCurrentPageCompleted && currentPageIndex == pageCount - 1) {
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('All pages completed!'),
-        ),
-      );
+       Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CongratulationsScreen(),
+      ),
+    );
     }
   }
 
@@ -264,6 +265,66 @@ class ASLImage extends StatelessWidget {
           imagePath,
           height: 150,
           width: 100,
+        ),
+      ),
+    );
+  }
+}
+
+class CongratulationsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'You did it!',
+          style: TextStyle(
+            color: Colors.yellow,
+            fontSize: 30.0,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.green,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.star,
+              size: 100,
+              color: Colors.yellow,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'CONGRATULATIONS!!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'All pages completed!',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => GameScreen(),
+                  ),
+                );
+              },
+              child: Text('Go back to practice'),
+            ),
+          ],
         ),
       ),
     );

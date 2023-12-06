@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:playfulingo/Games/game.dart';
 import 'package:playfulingo/Learn_ASL/learn.dart';
-import 'package:playfulingo/gesture_detection/gesture.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
 
 class DashboardItem extends StatelessWidget {
@@ -98,7 +97,7 @@ class Dash extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          gradient: linearGradient(45, ['blue', 'black', 'purple']),
+          gradient: linearGradient(45, ['blue', 'purple', 'orange']),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8),

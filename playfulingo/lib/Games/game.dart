@@ -5,6 +5,7 @@ import 'package:playfulingo/Games/yes_no.dart';
 import 'alphabet_match.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
 import 'alphabet_prac.dart';
+import 'package:playfulingo/HomePage/dash.dart';
 
 
 class GameItem extends StatelessWidget {
@@ -58,7 +59,7 @@ class GameItem extends StatelessWidget {
             title,
             style: const TextStyle(
               color: Colors.red,
-              fontSize: 35.0,
+              fontSize: 30.0,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.bold,
               shadows: [
@@ -132,10 +133,37 @@ class GameScreen extends StatelessWidget {
               nextScreen: ASLMatchingGame()
             ),
               GameItem(
-                title: 'Snap recog',
-                image: 'assets/fill_in_the blank.png',
+                title: 'Snap and Prac',
+                image: 'assets/learn_bg.png',
                 nextScreen: CameraScreen()
             ),
+         
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Dash(),
+                  ),
+                );
+              },
+              child: Text(
+                'Go back to homepage', 
+                style: TextStyle(
+                fontSize: 20,
+                
+              ),
+                  
+              ),
+              style: ElevatedButton.styleFrom(
+    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12), // Button padding
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(80), // Button border shape
+    ),
+    primary: Colors.orange[300], // Background color
+    onPrimary: Colors.blue, // Text color
+  ),
+),
+            
             ],
           ),
         ),
@@ -146,51 +174,4 @@ class GameScreen extends StatelessWidget {
 
 
 
-
-
-
-
-// class GameScreen extends StatelessWidget {
-//   const GameScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Playfulingo'),
-//         backgroundColor: Colors.black,
-//       ),
-//       body: Padding(
-//         padding:  const EdgeInsets.all(8.0),
-//         child: GridView.count(
-//           crossAxisCount: 2, // Two columns
-//           mainAxisSpacing: 20.0,
-//           crossAxisSpacing: 20.0,
-//           children:  <Widget>[
-//             const GameItem(
-//               title: 'Multiple Choice',
-//               image: 'assets/multiple-choice.png',
-//               nextScreen: multipleChoice(),
-//             ),
-//             GameItem(
-//                 title: 'Fill In The Blanks',
-//                 image: 'assets/fill_in_the blank.png',
-//                 nextScreen: FillInTheBlank()
-//             ),
-//             GameItem(
-//                 title: 'yes_or_no',
-//                 image: 'assets/yes_or_no.png',
-//                 nextScreen: YesNoGame()
-//             ),
-//             GameItem(
-//               title: 'Alphabet Drag and Drop Match',
-//               image: 'assets/yes_or_no.png',
-//               nextScreen: ASLMatchingGame()
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
