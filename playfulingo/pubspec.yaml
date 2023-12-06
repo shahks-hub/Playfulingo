@@ -48,6 +48,7 @@ dependencies:
   camera: ^0.10.0+2
   image_picker: ^1.0.4
   permission_handler: ^11.1.0
+ 
   
   
 
