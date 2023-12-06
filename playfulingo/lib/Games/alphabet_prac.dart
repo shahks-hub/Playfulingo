@@ -85,7 +85,16 @@ Future<void> _getImageFromCamera() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Camera Screen'),
+        title: Text(
+          'Camera Screen',
+          style: TextStyle(
+            color: Colors.yellow[500],
+            fontSize: 30.0,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.pink[200],
       ),
       body: Center(
         child: Column(
@@ -93,8 +102,33 @@ Future<void> _getImageFromCamera() async {
           children: <Widget>[
             ElevatedButton(
               onPressed: _getImageFromCamera,
-              child: Text('Take Picture'),
+              child: Text(
+                'Click here to take a picture',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
+            SizedBox(height: 30), // Add space between the button and instructions
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.purple[100],
+                borderRadius: BorderRadius.circular(10),
+              ),
+               child: Text(
+                'Use this module to test your skills! \nInstructions:\n'
+                '- Click the button above to take a picture using the camera on your phone\n'
+                '- Sign an alphabet and click a picture of your hand\n'
+                '- Submit the photo for review\n'
+                '- Get your result!\n\n'
+                '**This technology uses an image recognition model to recognize your signs and will display the top 5 matches!**',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),),
           ],
         ),
       ),
