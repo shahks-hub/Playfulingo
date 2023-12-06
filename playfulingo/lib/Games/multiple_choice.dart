@@ -26,6 +26,31 @@ class _multipleChoiceState extends State<multipleChoice> {
       correctAnswer: "THANK YOU",
       options: ["HELLO", "THANK YOU", "GOOD MORNING", "YES"],
     ),
+    multipleChoiceItem(
+      question: "What does this ASL sign mean?",
+      signImage: "assets/sorry.png", // Replace with your image path
+      correctAnswer: "SORRY",
+      options: ["OKAY", "YES", "PLEASE", "SORRY"],
+    ),
+    multipleChoiceItem(
+      question: "What does this ASL sign mean?",
+      signImage: "assets/bad.png", // Replace with your image path
+      correctAnswer: "BAD",
+      options: ["LOVE", "BAD", "CORRECT", "GOOD"],
+    ),
+    multipleChoiceItem(
+      question: "What does this ASL sign mean?",
+      signImage: "assets/please.png", // Replace with your image path
+      correctAnswer: "PLEASE",
+      options: ["PLEASE", "THANK YOU", "SORRY", "NO"],
+    ),
+    multipleChoiceItem(
+      question: "What does this ASL sign mean?",
+      signImage: "assets/good.png", // Replace with your image path
+      correctAnswer: "GOOD",
+      options: ["FRIEND", "NAME", "NEXT", "GOOD"],
+    ),
+
     // Add more quiz items here.
   ];
 
@@ -66,7 +91,7 @@ class _multipleChoiceState extends State<multipleChoice> {
                     Navigator.of(context).pop();
                     Navigator.pop(context); // Return to the previous screen (Dash)
                   },
-                  child: const Text("Back to Dashboard"),
+                  child: const Text("Back"),
                 ),
               ],
             );
@@ -80,33 +105,39 @@ class _multipleChoiceState extends State<multipleChoice> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ASL Quiz"),
+        title: const Text("Multiple Choice"),
+        backgroundColor: Colors.blue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              quizItems[currentQuestionIndex].question,
-              style: const TextStyle(fontSize: 20.0),
-            ),
-            const SizedBox(height: 20.0),
-            Image.asset(
-              quizItems[currentQuestionIndex].signImage,
-              width: 200.0,
-              height: 200.0,
-            ),
-            const SizedBox(height: 20.0),
-            Column(
-              children: quizItems[currentQuestionIndex]
-                  .options
-                  .map((option) => ElevatedButton(
-                        onPressed: () => checkAnswer(option),
-                        child: Text(option),
-                      ))
-                  .toList(),
-            ),
-          ],
+      backgroundColor: const Color.fromARGB(255, 33, 208, 243),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min, // Ensure minimum vertical space.
+            children: [
+              Text(
+                quizItems[currentQuestionIndex].question,
+                style: const TextStyle(fontSize: 20.0),
+              ),
+              const SizedBox(height: 20.0),
+              Image.asset(
+                quizItems[currentQuestionIndex].signImage,
+                width: 200.0,
+                height: 200.0,
+              ),
+              const SizedBox(height: 20.0),
+              Column(
+                children: quizItems[currentQuestionIndex]
+                    .options
+                    .map((option) => ElevatedButton(
+                          onPressed: () => checkAnswer(option),
+                          child: Text(option),
+                        ))
+                    .toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );

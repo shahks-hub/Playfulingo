@@ -17,7 +17,32 @@ class _YesNoGameState extends State<YesNoGame> {
     ),
     YesNoItem(
       question: 'Is this THANK YOU?',
+      image: 'assets/good.png',
+      answer: false,
+    ),
+    YesNoItem(
+      question: 'Is this PLEASE?',
+      image: 'assets/hello.png',
+      answer: false,
+    ),
+    YesNoItem(
+      question: 'Is this SORRY?',
+      image: 'assets/sorry.png',
+      answer: true,
+    ),
+    YesNoItem(
+      question: 'Is this BAD?',
+      image: 'assets/bad.png',
+      answer: false,
+    ),
+    YesNoItem(
+      question: 'Is this THANK YOU?',
       image: 'assets/thank_you.png',
+      answer: true,
+    ),
+    YesNoItem(
+      question: 'Is this GOOD?',
+      image: 'assets/good.png',
       answer: false,
     ),
   ];
@@ -49,7 +74,7 @@ class _YesNoGameState extends State<YesNoGame> {
     });
   }
 
-  Future<void> showGameOverDialog() async {
+   Future<void> showGameOverDialog() async {
     return showDialog(
       context: context,
       builder: (context) {
@@ -64,6 +89,13 @@ class _YesNoGameState extends State<YesNoGame> {
               },
               child: Text('Restart'),
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop(); // Return to the previous tab/screen
+              },
+              child: Text('Back'),
+            ),
           ],
         );
       },
@@ -75,32 +107,37 @@ class _YesNoGameState extends State<YesNoGame> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Yes or No Game'),
+        backgroundColor: Colors.blue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Image.asset(
-              yesNoItems[currentQuestionIndex].image,
-              width: 200,
-              height: 200,
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              yesNoItems[currentQuestionIndex].question,
-              style: TextStyle(fontSize: 20.0),
-            ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () => checkAnswer(true),
-              child: Text('Yes'),
-            ),
-            SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: () => checkAnswer(false),
-              child: Text('No'),
-            ),
-          ],
+      backgroundColor: const Color.fromARGB(255, 33, 208, 243),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                yesNoItems[currentQuestionIndex].image,
+                width: 200,
+                height: 200,
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                yesNoItems[currentQuestionIndex].question,
+                style: TextStyle(fontSize: 20.0),
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () => checkAnswer(true),
+                child: Text('Yes'),
+              ),
+              SizedBox(height: 10.0),
+              ElevatedButton(
+                onPressed: () => checkAnswer(false),
+                child: Text('No'),
+              ),
+            ],
+          ),
         ),
       ),
     );

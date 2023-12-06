@@ -6,7 +6,7 @@ import 'alphabet_match.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
 import 'alphabet_prac.dart';
 import 'package:playfulingo/HomePage/dash.dart';
-
+import 'package:playfulingo/Games/memory_matching.dart';
 
 class GameItem extends StatelessWidget {
   final String title;
@@ -123,7 +123,7 @@ class GameScreen extends StatelessWidget {
                 nextScreen: FillInTheBlank()
             ),
             GameItem(
-                title: 'yes_or_no',
+                title: 'Yes Or No',
                 image: 'assets/yes_or_no.png',
                 nextScreen: YesNoGame()
             ),
@@ -136,6 +136,11 @@ class GameScreen extends StatelessWidget {
                 title: 'Snap and Prac',
                 image: 'assets/learn_bg.png',
                 nextScreen: CameraScreen()
+            ),
+            GameItem(
+                title: 'Memory Matching',
+                image: 'assets/memory-matching.png',
+                nextScreen: MemoryMatchingGame()
             ),
          
             ElevatedButton(
