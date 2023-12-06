@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:playfulingo/StartUp/signup_page.dart';
-import 'package:playfulingo/HomePage/dash.dart'; // Ensure you've created this file.
+import 'package:playfulingo/HomePage/dash.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPrompt extends StatefulWidget {
