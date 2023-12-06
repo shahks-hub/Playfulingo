@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:playfulingo/StartUp/login_prompt.dart';
 import 'package:playfulingo/HomePage/dash.dart'; // Assuming you've created this file.
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -110,6 +111,12 @@ class _SignupPageState extends State<SignupPage> {
                               final userCredential =
                                   await _auth.createUserWithEmailAndPassword(
                                       email: email, password: password);
+                                        // If user creation is successful, add user details to Firestore
+                                  await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+                                  'nickname' : nicknameController.text,
+                                    'email': email,
+      
+                                    });
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
