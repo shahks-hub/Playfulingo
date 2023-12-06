@@ -69,7 +69,7 @@ class DashboardItem extends StatelessWidget {
   }
 }
 
-// need to add settings option
+
 
 class Dash extends StatelessWidget {
   const Dash({super.key});
@@ -77,9 +77,20 @@ class Dash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       appBar: AppBar(
-        title: const Text('Playfulingo'),
-        backgroundColor: Colors.black,
+   
+        title: const Text(
+          'Playfulingo', 
+          style: TextStyle(
+            color: Colors.orange,
+            fontSize: 35.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),
+          
+        ),
+        backgroundColor: Colors.black
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -104,7 +115,7 @@ class Dash extends StatelessWidget {
                   nextScreen: GestureScreen()),
               DashboardItem(
                   title: 'Games',
-                  image: 'assets/sample_logo.png',
+                  image: 'assets/multiple-choice.png',
                   nextScreen: GameScreen()),
             ],
           ),

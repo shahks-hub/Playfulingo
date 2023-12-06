@@ -83,7 +83,17 @@ class Learn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome to learning ! '),
+        iconTheme: IconThemeData(
+      color: Colors.blue, // Change the color of the back arrow here
+    ),
+        title: const Text(
+          'Learn tab', 
+          style: TextStyle(
+            color: Colors.orange,
+            fontSize: 30.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),),
         backgroundColor: Colors.black,
       ),
       body: Container(

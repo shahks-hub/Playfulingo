@@ -84,7 +84,17 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Let us practice now'),
+         iconTheme: IconThemeData(
+      color: Colors.blue, // Change the color of the back arrow here
+    ),
+        title: const Text(
+          'Practice make perfect', 
+          style: TextStyle(
+            color: Colors.orange,
+            fontSize: 30.0,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),),
         backgroundColor: Colors.black,
       ),
       body: Container(
@@ -117,7 +127,7 @@ class GameScreen extends StatelessWidget {
             ),
             GameItem(
               title: 'Alphabet Drag Drop Match',
-              image: 'assets/AR.jpg',
+              image: 'assets/flashcard.png',
               nextScreen: ASLMatchingGame()
             )
             ],
