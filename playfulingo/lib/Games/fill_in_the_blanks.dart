@@ -15,10 +15,34 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
   List<FillInTheBlankItem> quizItems = [
     FillInTheBlankItem(
       question: "__ How are you?",
-      correctAnswer: 1, // Index of the correct picture (0 or 1).
+      correctAnswer: 0, // Index of the correct picture (0 or 1).
       options: [
         "assets/hello.png", // Option 0: Replace with your image path.
         "assets/good.png",  // Option 1: Replace with your image path.
+      ],
+    ),
+    FillInTheBlankItem(
+      question: "I feel __ today.",
+      correctAnswer: 1, // Index of the correct picture (0 or 1).
+      options: [
+        "assets/sorry.png", // Option 0: Replace with your image path.
+        "assets/good.png",  // Option 1: Replace with your image path.
+      ],
+    ),
+    FillInTheBlankItem(
+      question: "This is a __ idea.",
+      correctAnswer: 1, // Index of the correct picture (0 or 1).
+      options: [
+        "assets/please.png", // Option 0: Replace with your image path.
+        "assets/bad.png",  // Option 1: Replace with your image path.
+      ],
+    ),
+    FillInTheBlankItem(
+      question: "Could you __ pass me the salt at the dinner table?",
+      correctAnswer: 1, // Index of the correct picture (0 or 1).
+      options: [
+        "assets/sorry.png", // Option 0: Replace with your image path.
+        "assets/please.png",  // Option 1: Replace with your image path.
       ],
     ),
     FillInTheBlankItem(
@@ -26,6 +50,14 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
       correctAnswer: 0, // Index of the correct picture (0 or 1).
       options: [
         "assets/thank_you.png",  // Option 0: Replace with your image path.
+        "assets/sorry.png",    // Option 1: Replace with your image path.
+      ],
+    ),
+    FillInTheBlankItem(
+      question: "I'm __ for the mistake",
+      correctAnswer: 1, // Index of the correct picture (0 or 1).
+      options: [
+        "assets/bad.png",  // Option 0: Replace with your image path.
         "assets/sorry.png",    // Option 1: Replace with your image path.
       ],
     ),
@@ -81,39 +113,45 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
     });
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text("FillInTheBlank"),
-    ),
-    body: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Text(
-            quizItems[currentQuestionIndex].question,
-            style: const TextStyle(fontSize: 20.0),
-          ),
-          const SizedBox(height: 20.0), // Add space below the question.
-          Column(
-            children: List.generate(quizItems[currentQuestionIndex].options.length, (index) {
-              return Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () => checkAnswer(index),
-                    child: Image.asset(quizItems[currentQuestionIndex].options[index]),
-                  ),
-                  const SizedBox(height: 10.0), // Add space between answer options.
-                ],
-              );
-            }),
-          ),
-        ],
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Fill In The Blank"),
+        backgroundColor: Colors.blue,
       ),
-    ),
-  );
-}
+      backgroundColor: const Color.fromARGB(255, 33, 208, 243),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min, // Ensure minimum vertical space.
+            children: [
+              Text(
+                quizItems[currentQuestionIndex].question,
+                style: const TextStyle(fontSize: 20.0),
+              ),
+              const SizedBox(height: 20.0), // Add space below the question.
+              Column(
+                children: List.generate(quizItems[currentQuestionIndex].options.length, (index) {
+                  return Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => checkAnswer(index),
+                        child: Image.asset(quizItems[currentQuestionIndex].options[index]),
+                      ),
+                      const SizedBox(height: 10.0), // Add space between answer options.
+                    ],
+                  );
+                }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class FillInTheBlankItem {
