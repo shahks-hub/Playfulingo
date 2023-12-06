@@ -91,7 +91,7 @@ class GameScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          gradient: linearGradient(45, ['red', 'green', 'blue']),
+          gradient: linearGradient(45, ['blue', 'green', 'blue']),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -116,8 +116,8 @@ class GameScreen extends StatelessWidget {
                 nextScreen: YesNoGame()
             ),
             GameItem(
-              title: 'Alphabet Drag and Drop Match',
-              image: 'assets/yes_or_no.png',
+              title: 'Alphabet Drag Drop Match',
+              image: 'assets/AR.jpg',
               nextScreen: ASLMatchingGame()
             )
             ],
