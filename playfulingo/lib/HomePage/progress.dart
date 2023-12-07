@@ -32,12 +32,12 @@ class ProgressPage extends StatelessWidget {
             return Center(child: Text('User not authenticated'));
           } else {
             final currentUser = FirebaseAuth.instance.currentUser!;
-            final userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-
+            final userRef = FirebaseFirestore.instance
+                .collection('users')
+                .doc(currentUser.uid);
 
             return StreamBuilder<DocumentSnapshot>(
               stream: userRef.snapshots(),
-              
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -47,10 +47,8 @@ class ProgressPage extends StatelessWidget {
                   return Center(child: Text('User data not found'));
                 } else {
                   final userData = snapshot.data!;
-                  final completedLessons = List<String>.from(userData.get('completed_lessons') ?? []);
-                 
-                  
-
+                  final completedLessons = List<String>.from(
+                      userData.get('completed_lessons') ?? []);
 
                   return FutureBuilder<QuerySnapshot>(
                     future: userRef.collection('game_scores').get(),
@@ -59,7 +57,8 @@ class ProgressPage extends StatelessWidget {
                         return Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      } else if (!snapshot.hasData ||
+                          snapshot.data!.docs.isEmpty) {
                         return Center(child: Text('No game scores available'));
                       } else {
                         final gameScores = snapshot.data!.docs;
@@ -69,16 +68,19 @@ class ProgressPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildSectionTitle('Completed Lessons', Colors.purple),
+                              _buildSectionTitle(
+                                  'Completed Lessons', Colors.purple),
                               SizedBox(height: 10),
-                              _buildBoxList(completedLessons, Colors.purple[800]!),
-
+                              _buildBoxList(
+                                  completedLessons, Colors.purple[800]!),
                               SizedBox(height: 80),
-
                               _buildSectionTitle('Game Scores', Colors.purple),
                               SizedBox(height: 10),
                               _buildBoxList(
-                                gameScores.map((gameEntry) => 'Game: ${gameEntry.id}, Highest Score Earned: ${gameEntry['highest_score']}').toList(),
+                                gameScores
+                                    .map((gameEntry) =>
+                                        'Game: ${gameEntry.id}, Highest Score Earned: ${gameEntry['highest_score']}')
+                                    .toList(),
                                 Colors.purple[800]!,
                               ),
                             ],
@@ -129,13 +131,14 @@ class ProgressPage extends StatelessWidget {
                     ),
                   ))
               .toList()
-          : [Text('No items, Come back after taking some lessons!', style: TextStyle(
-            
-            fontSize: 20,
-            color: Colors.orange,
-            fontWeight: FontWeight.bold,
-
-          ))],
+          : [
+              Text('No items, Come back after taking some lessons!',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
+                  ))
+            ],
     );
   }
 }

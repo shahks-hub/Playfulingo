@@ -108,13 +108,17 @@ class _SignupPageState extends State<SignupPage> {
                             }
 
                             try {
-                              final userCredential = await _auth.createUserWithEmailAndPassword(
+                              final userCredential =
+                                  await _auth.createUserWithEmailAndPassword(
                                 email: email,
                                 password: password,
                               );
 
                               // If user creation is successful, add user details to Firestore
-                              await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(userCredential.user!.uid)
+                                  .set({
                                 'nickname': nicknameController.text,
                                 'email': email,
                                 'user_level': "1",
@@ -123,18 +127,22 @@ class _SignupPageState extends State<SignupPage> {
 
                               List<String> initialGameScores = [
                                 'abc_drop',
-    'fill_blanks',
-    'multiple_choice',
-    'snap_recog',
-    'yes_no',
+                                'fill_blanks',
+                                'multiple_choice',
+                                'snap_recog',
+                                'yes_no',
                               ];
 
-                            for (var gameName in initialGameScores) {
-  await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).collection('game_scores').doc(gameName).set({
-    'highest_score': 0,
-  });
-}
-
+                              for (var gameName in initialGameScores) {
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userCredential.user!.uid)
+                                    .collection('game_scores')
+                                    .doc(gameName)
+                                    .set({
+                                  'highest_score': 0,
+                                });
+                              }
 
                               Navigator.pushReplacement(
                                 context,
@@ -142,9 +150,11 @@ class _SignupPageState extends State<SignupPage> {
                               );
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'weak-password') {
-                                _showSnackBar(context, 'The password provided is too weak.');
+                                _showSnackBar(context,
+                                    'The password provided is too weak.');
                               } else if (e.code == 'email-already-in-use') {
-                                _showSnackBar(context, 'An account already exists for that email.');
+                                _showSnackBar(context,
+                                    'An account already exists for that email.');
                               }
                             } catch (e) {
                               _showSnackBar(context, e.toString());

@@ -35,7 +35,6 @@ List<ASLFlashcard> flashcards = [
     aslSignAsset: 'assets/bad.png',
     englishWord: 'Bad',
   ),
-  
 ];
 
 class FlashcardScreen extends StatefulWidget {

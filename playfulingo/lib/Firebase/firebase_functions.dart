@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-
 Future<List<String>> fetchCompletedLessons(String userEmail) async {
   final db = FirebaseFirestore.instance;
   try {
@@ -22,7 +20,8 @@ Future<List<String>> fetchCompletedLessons(String userEmail) async {
       List<dynamic> completedLessonsRefs = userData['completed_lessons'] ?? [];
 
       // No need for mapping if they are directly strings
-      completedLessons.addAll(completedLessonsRefs.map((ref) => ref.toString()));
+      completedLessons
+          .addAll(completedLessonsRefs.map((ref) => ref.toString()));
     }
 
     print("completed: $completedLessons");
@@ -32,8 +31,6 @@ Future<List<String>> fetchCompletedLessons(String userEmail) async {
     return [];
   }
 }
-
-
 
 Future<int> getCurrentHighestScore(String gameName) async {
   final currentUser = FirebaseAuth.instance.currentUser;

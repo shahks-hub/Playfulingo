@@ -16,7 +16,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   final ImagePicker _picker = ImagePicker();
   int score = 0; // Initialize score
-@override
+  @override
   void initState() {
     super.initState();
     fetchAndUpdateCurrentScore();
@@ -30,20 +30,19 @@ class _CameraScreenState extends State<CameraScreen> {
       print('Error fetching and updating score: $e');
     }
   }
-   Future<List<dynamic>> query(String filename) async {
-    
+
+  Future<List<dynamic>> query(String filename) async {
     print("Function 'query' called");
-  
+
     final File imageFile = File(filename);
     print('File located at: ${imageFile.path}');
     final imageBytes = await imageFile.readAsBytes();
     final String apiToken = dotenv.env['API_TOKEN'] ?? '';
 
-
     final apiUrl = Uri.parse(
         "https://api-inference.huggingface.co/models/dima806/asl_alphabet_image_detection");
     print("Function 'query' - API URL: $apiUrl");
-  
+
     try {
       print("Function 'query' - making POST request");
       final response = await http.post(
@@ -70,9 +69,11 @@ class _CameraScreenState extends State<CameraScreen> {
 
   Future<void> _getImageFromCamera() async {
     try {
-      final PermissionStatus permissionStatus = await Permission.camera.request();
+      final PermissionStatus permissionStatus =
+          await Permission.camera.request();
       if (permissionStatus.isGranted) {
-        final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+        final XFile? image =
+            await _picker.pickImage(source: ImageSource.camera);
         if (image != null) {
           try {
             print("Trying to query API with image: ${image.path}");
@@ -85,7 +86,8 @@ class _CameraScreenState extends State<CameraScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ResultScreen(result: result, score: score),
+                builder: (context) =>
+                    ResultScreen(result: result, score: score),
               ),
             );
           } catch (e) {
@@ -151,7 +153,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 ),
               ),
             ),
-             SizedBox(height: 35),
+            SizedBox(height: 35),
             Text(
               'Current Score: $score',
               textAlign: TextAlign.center,
@@ -179,8 +181,6 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  
-
   @override
   Widget build(BuildContext context) {
     List<String> top5Labels = widget.result
@@ -232,7 +232,6 @@ class _ResultScreenState extends State<ResultScreen> {
                 color: Colors.pink[500],
               ),
             ),
-            
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
