@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'game.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ASLMatchingGame extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _ASLMatchingGameState extends State<ASLMatchingGame> {
   int currentPageIndex = 0;
   final int itemsPerPage = 3;
   late PageController _pageController;
-  late List<String> previousPageLetters; 
+  late List<String> previousPageLetters;
 
   @override
   void initState() {
@@ -62,182 +63,195 @@ class _ASLMatchingGameState extends State<ASLMatchingGame> {
     final int pageCount = (letterData.length / itemsPerPage).ceil();
     final List<List<String>> pages = List.generate(
       pageCount,
-      (index) => letterData.keys.skip(index * itemsPerPage).take(itemsPerPage).toList(),
+      (index) => letterData.keys
+          .skip(index * itemsPerPage)
+          .take(itemsPerPage)
+          .toList(),
     );
- return Scaffold(
-    appBar: AppBar(
-      iconTheme: IconThemeData(
-        color: Colors.white, // Change the color of the back arrow here
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, // Change the color of the back arrow here
+        ),
+        title: Text(
+          'Score: ${score.length} / ${letterData.length}',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.purple[800],
       ),
-      title: Text(
-        'Score: ${score.length} / ${letterData.length}',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 30.0,
-          fontStyle: FontStyle.italic,
-          fontWeight: FontWeight.bold,
+      body: Container(
+        color: Colors
+            .pink[100], // Replace this with your preferred background color
+        child: Column(
+          children: [
+            SizedBox(height: 20), // Add spacing between the app bar and text
+            Text(
+              'Drag and Drop to Match',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.pink[500],
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: Stack(
+                  children: [
+                    PageView.builder(
+                      controller: _pageController,
+                      itemCount: pageCount,
+                      onPageChanged: (int index) {
+                        setState(() {
+                          currentPageIndex = index;
+                        });
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return _buildPage(pages[index]);
+                      },
+                    ),
+                    _buildNextPageButton(),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      backgroundColor: Colors.purple[800],
-    ),
-    body: Container(
-      color: Colors.pink[100], // Replace this with your preferred background color
-      child: Column(
-        children: [
-          SizedBox(height: 20), // Add spacing between the app bar and text
-          Text(
-            'Drag and Drop to Match',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Colors.pink[500],
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Stack(
-                children: [
-                  PageView.builder(
-                    controller: _pageController,
-                    itemCount: pageCount,
-                    onPageChanged: (int index) {
-                      setState(() {
-                        currentPageIndex = index;
-                      });
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      return _buildPage(pages[index]);
-                    },
-                  ),
-                  _buildNextPageButton(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildPage(List<String> pageLetters) {
-  return SingleChildScrollView(
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: pageLetters.map((letter) {
-              return Draggable<String>(
-                data: letter,
-                child: ASLImage(
-                  imagePath: score[letter] == true ? 'assets/AR.jpg' : letterData[letter]!,
-                ),
-                feedback: ASLImage(imagePath: letterData[letter]!),
-                childWhenDragging: ASLImage(imagePath: 'assets/practice.png'),
-              );
-            }).toList(),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: pageLetters.map((letter) {
-              return _buildDragTarget(letter);
-            }).toList()
-              ..shuffle(Random(seed)),
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: pageLetters.map((letter) {
+                return Draggable<String>(
+                  data: letter,
+                  child: ASLImage(
+                    imagePath: score[letter] == true
+                        ? 'assets/AR.jpg'
+                        : letterData[letter]!,
+                  ),
+                  feedback: ASLImage(imagePath: letterData[letter]!),
+                  childWhenDragging: ASLImage(imagePath: 'assets/practice.png'),
+                );
+              }).toList(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: pageLetters.map((letter) {
+                return _buildDragTarget(letter);
+              }).toList()
+                ..shuffle(Random(seed)),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget _buildDragTarget(String letter) {
-  return DragTarget<String>(
-    builder: (BuildContext context, List<String?> incoming, List<dynamic> rejected) {
-      if (score.containsKey(letter) && score[letter] == true) {
-        return Container(
-          color: Colors.pink[500],
-          child: Center(
-            child: Text(
-              'Correct!',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+  Widget _buildDragTarget(String letter) {
+    return DragTarget<String>(
+      builder: (BuildContext context, List<String?> incoming,
+          List<dynamic> rejected) {
+        if (score.containsKey(letter) && score[letter] == true) {
+          return Container(
+            color: Colors.pink[500],
+            child: Center(
+              child: Text(
+                'Correct!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          alignment: Alignment.center,
-          height: 100,
-          width: 100,
-        );
-      } else {
-        return Container(
-          color: Colors.purple[400],
-          height: 100,
-          width: 100,
-          child: Center(
-            child: Text(
-              letter,
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            alignment: Alignment.center,
+            height: 100,
+            width: 100,
+          );
+        } else {
+          return Container(
+            color: Colors.purple[400],
+            height: 100,
+            width: 100,
+            child: Center(
+              child: Text(
+                letter,
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          alignment: Alignment.center,
-        );
-      }
-    },
-    onWillAccept: (data) => data == letter,
-    onAccept: (data) {
-      setState(() {
-        score[letter] = true;
-        _checkAndNavigate();
-      });
-    },
-    onLeave: (data) {},
-  );
-}
-
+            alignment: Alignment.center,
+          );
+        }
+      },
+      onWillAccept: (data) => data == letter,
+      onAccept: (data) {
+        setState(() {
+          score[letter] = true;
+          _checkAndNavigate();
+        });
+      },
+      onLeave: (data) {},
+    );
+  }
 
   void _checkAndNavigate() {
     final int pageCount = (letterData.length / itemsPerPage).ceil();
-    final List<String> currentPage = letterData.keys.skip(currentPageIndex * itemsPerPage).take(itemsPerPage).toList();
-    final bool isCurrentPageCompleted = currentPage.every((letter) => score.containsKey(letter));
-     previousPageLetters.addAll(currentPage);
-     print(previousPageLetters);
+    final List<String> currentPage = letterData.keys
+        .skip(currentPageIndex * itemsPerPage)
+        .take(itemsPerPage)
+        .toList();
+    final bool isCurrentPageCompleted =
+        currentPage.every((letter) => score.containsKey(letter));
+    previousPageLetters.addAll(currentPage);
+    print(previousPageLetters);
 
     if (isCurrentPageCompleted && currentPageIndex < pageCount - 1) {
       setState(() {
         currentPageIndex++;
       });
     } else if (isCurrentPageCompleted && currentPageIndex == pageCount - 1) {
-
-       Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => CongratulationsScreen(),
-      ),
-    );
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CongratulationsScreen(),
+        ),
+      );
     }
   }
 
   Widget _buildNextPageButton() {
     final int pageCount = (letterData.length / itemsPerPage).ceil();
 
-    final List<String> currentPage = letterData.keys.skip(currentPageIndex * itemsPerPage).take(itemsPerPage).toList();
-    final bool isPreviousPagesCompleted = previousPageLetters.every((letter) => score.containsKey(letter) && score[letter] == true);
+    final List<String> currentPage = letterData.keys
+        .skip(currentPageIndex * itemsPerPage)
+        .take(itemsPerPage)
+        .toList();
+    final bool isPreviousPagesCompleted = previousPageLetters
+        .every((letter) => score.containsKey(letter) && score[letter] == true);
 
-    
     if (isPreviousPagesCompleted) {
       return Positioned(
         bottom: 20,
         right: 20,
         child: ElevatedButton(
           onPressed: () {
-            _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.ease);
+            _pageController.nextPage(
+                duration: Duration(milliseconds: 500), curve: Curves.ease);
           },
           child: Text('Go to Next Page'),
         ),

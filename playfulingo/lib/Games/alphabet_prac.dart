@@ -4,9 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'game.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import 'game.dart';
+import 'package:playfulingo/Firebase/firebase_functions.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -15,21 +15,34 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   final ImagePicker _picker = ImagePicker();
+  int score = 0; // Initialize score
+  @override
+  void initState() {
+    super.initState();
+    fetchAndUpdateCurrentScore();
+  }
+
+  Future<void> fetchAndUpdateCurrentScore() async {
+    try {
+      score = await getCurrentHighestScore('snap_recog');
+      setState(() {});
+    } catch (e) {
+      print('Error fetching and updating score: $e');
+    }
+  }
 
   Future<List<dynamic>> query(String filename) async {
-    
     print("Function 'query' called");
-  
+
     final File imageFile = File(filename);
     print('File located at: ${imageFile.path}');
     final imageBytes = await imageFile.readAsBytes();
     final String apiToken = dotenv.env['API_TOKEN'] ?? '';
 
-
     final apiUrl = Uri.parse(
         "https://api-inference.huggingface.co/models/dima806/asl_alphabet_image_detection");
     print("Function 'query' - API URL: $apiUrl");
-  
+
     try {
       print("Function 'query' - making POST request");
       final response = await http.post(
@@ -53,38 +66,43 @@ class _CameraScreenState extends State<CameraScreen> {
       throw Exception('Failed to perform API call: $e');
     }
   }
-Future<void> _getImageFromCamera() async {
-  try {
-    final PermissionStatus permissionStatus = await Permission.camera.request();
-    if (permissionStatus.isGranted) {
-      final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-      if (image != null) {
-        // Call your query function passing the image file path
-        try {
-          print("Trying to query API with image: ${image.path}");
-          final result = await query(image.path);
-          print("API Result: $result");
-          // Navigate to the result screen and pass the result
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ResultScreen(result: result),
-            ),
-          );
-        } catch (e) {
-          print('Error related to API query: $e');
+
+  Future<void> _getImageFromCamera() async {
+    try {
+      final PermissionStatus permissionStatus =
+          await Permission.camera.request();
+      if (permissionStatus.isGranted) {
+        final XFile? image =
+            await _picker.pickImage(source: ImageSource.camera);
+        if (image != null) {
+          try {
+            print("Trying to query API with image: ${image.path}");
+            final result = await query(image.path);
+            print("API Result: $result");
+            setState(() {
+              score++; // Increment score on successful image capture
+            });
+            await updateGameScore('snap_recog', score);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ResultScreen(result: result, score: score),
+              ),
+            );
+          } catch (e) {
+            print('Error related to API query: $e');
+          }
+        } else {
+          print('No image selected');
         }
       } else {
-        print('No image selected');
+        print('Camera permission denied');
       }
-    } else {
-      print('Camera permission denied');
+    } catch (e) {
+      print('Error while picking image: $e');
     }
-  } catch (e) {
-    print('Error while picking image: $e');
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -115,41 +133,58 @@ Future<void> _getImageFromCamera() async {
                 ),
               ),
             ),
-            SizedBox(height: 30), // Add space between the button and instructions
+            SizedBox(height: 30),
             Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.purple[100],
                 borderRadius: BorderRadius.circular(10),
               ),
-               child: Text(
+              child: Text(
                 'Use this module to test your skills! \nInstructions:\n'
                 '- Click the button above to take a picture using the camera on your phone\n'
                 '- Sign an alphabet and click a picture of your hand\n'
                 '- Submit the photo for review\n'
-                '- Get your result!\n\n'
+                '- Get your result! and you get points just for trying!\n\n'
                 '**This technology uses an image recognition model to recognize your signs and will display the top 5 matches!**',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
-              ),),
+              ),
+            ),
+            SizedBox(height: 35),
+            Text(
+              'Current Score: $score',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.pink[500],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-class ResultScreen extends StatelessWidget {
-  final List<dynamic> result;
 
-  ResultScreen({required this.result});
+class ResultScreen extends StatefulWidget {
+  final List<dynamic> result;
+  final int score;
+
+  ResultScreen({required this.result, required this.score});
 
   @override
+  _ResultScreenState createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  @override
   Widget build(BuildContext context) {
-    // Extract the top 5 labels from the result list
-    List<String> top5Labels = result
-        .sublist(0, result.length > 5 ? 5 : result.length)
+    List<String> top5Labels = widget.result
+        .sublist(0, widget.result.length > 5 ? 5 : widget.result.length)
         .map((item) => item['label'] as String)
         .toList();
 
@@ -174,11 +209,11 @@ class ResultScreen extends StatelessWidget {
               padding: EdgeInsets.all(12.0),
               margin: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                color: Colors.purple[100], // Set the background color
-                borderRadius: BorderRadius.circular(10.0), // Optional: Add border radius
+                color: Colors.purple[100],
+                borderRadius: BorderRadius.circular(10.0),
               ),
               child: Text(
-                'Top 5 Results: $top5Labels', // Display top 5 results here
+                'Top 5 Results: $top5Labels',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30.0,
@@ -189,13 +224,12 @@ class ResultScreen extends StatelessWidget {
             ),
             SizedBox(height: 35),
             Text(
-              'These results display what your sign looks like.\n'
-              'Not what your looking for? Try again!', // Add your additional text
+              'Updated Score: ${widget.score}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 28,
-                 fontWeight: FontWeight.bold,
-                color: Colors.yellow[800],
+                fontWeight: FontWeight.bold,
+                color: Colors.pink[500],
               ),
             ),
             SizedBox(height: 20),

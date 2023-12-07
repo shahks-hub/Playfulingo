@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:playfulingo/Games/game.dart';
 import 'package:playfulingo/Learn_ASL/learn.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
+import 'progress.dart';
 
 class DashboardItem extends StatelessWidget {
   final String title;
@@ -30,7 +31,8 @@ class DashboardItem extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        backgroundColor: Colors.transparent, // Change to a transparent background
+        backgroundColor:
+            Colors.transparent, // Change to a transparent background
       ),
       child: Center(
         child: Container(
@@ -73,8 +75,6 @@ class DashboardItem extends StatelessWidget {
   }
 }
 
-
-
 class Dash extends StatelessWidget {
   const Dash({Key? key});
 
@@ -93,37 +93,90 @@ class Dash extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          gradient: linearGradient(45, ['blue', 'purple', 'orange']),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: GridView.count(
-            crossAxisCount: 2, // Two columns
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 20.0,
-            childAspectRatio: 0.3, // Adjust the aspect ratio of the grid items
-            children: <Widget>[
-              Center(
-                child: DashboardItem(
-                  title: 'Learn',
-                  image: 'assets/learn_bg.png',
-                  nextScreen: Learn(),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: linearGradient(45, ['blue', 'purple', 'orange']),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: GridView.count(
+                  crossAxisCount: 2, // Two columns
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 20.0,
+                  childAspectRatio:
+                      0.3, // Adjust the aspect ratio of the grid items
+                  children: <Widget>[
+                    Center(
+                      child: DashboardItem(
+                        title: 'Learn',
+                        image: 'assets/learn_bg.png',
+                        nextScreen: Learn(),
+                      ),
+                    ),
+                    Center(
+                      child: DashboardItem(
+                        title: 'Games',
+                        image: 'assets/multiple-choice.png',
+                        nextScreen: GameScreen(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Center(
-                child: DashboardItem(
-                  title: 'Games',
-                  image: 'assets/multiple-choice.png',
-                  nextScreen: GameScreen(),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            color: Colors
+                .black, // Background color for the section containing the buttons
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProgressPage(),
+                        ),
+                      );
+                    },
+                    child: Text('Your Progress'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Show the instructions pop-up box when the button is pressed
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('App Instructions'),
+                            content: Text(
+                                'This app is for us to learn ASL together! There is a learn section and another one with games and activities for you to practice. some games are locked until you complete corresponding lessons. '),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Instructions'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
