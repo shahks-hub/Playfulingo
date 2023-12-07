@@ -84,14 +84,14 @@ class GameScreen extends StatelessWidget {
               unlockedImage: 'assets/flashcard.png' ,
               lockedImage:   'assets/lock.png' ,
               nextScreen: ASLMatchingGame(),
-               isUnlocked: completedLessons.contains('x3BsaHPxcvmBoQLroe0I'), 
+               isUnlocked: completedLessons.contains('abc_tap'), 
             ),
               GameItem(
                 title: 'Snap and Prac',
                 unlockedImage: 'assets/learn_bg.png',
                 lockedImage:   'assets/lock.png' ,
                 nextScreen: CameraScreen(),
-                 isUnlocked: completedLessons.contains('x3BsaHPxcvmBoQLroe0I'), 
+                 isUnlocked: completedLessons.contains('abc_video'), 
             ),
          
             ElevatedButton(
