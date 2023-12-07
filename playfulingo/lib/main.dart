@@ -10,8 +10,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  //await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
 
   runApp(const Playfulingo());
 }

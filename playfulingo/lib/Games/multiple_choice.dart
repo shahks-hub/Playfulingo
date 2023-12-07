@@ -89,8 +89,7 @@ class _multipleChoiceState extends State<multipleChoice> {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    Navigator.pop(
-                        context); // Return to the previous screen (Dash)
+                    Navigator.pop(context); // Return to the previous screen (Dash)
                   },
                   child: const Text("Back"),
                 ),

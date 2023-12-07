@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+
 class MemoryMatchingGame extends StatefulWidget {
   @override
   _MemoryMatchingGameState createState() => _MemoryMatchingGameState();
@@ -110,12 +111,12 @@ class _MemoryMatchingGameState extends State<MemoryMatchingGame> {
                     child: Text('Play Again'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // Return to the previous tab/screen
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('Back'),
-                  ),
+                  onPressed: () {
+                    // Return to the previous tab/screen
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Back'),
+                ),
                 ],
               )
             : GridView.builder(
