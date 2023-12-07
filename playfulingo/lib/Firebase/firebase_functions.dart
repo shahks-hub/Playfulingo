@@ -33,3 +33,26 @@ Future<List<String>> fetchCompletedLessons(String userEmail) async {
   }
 }
 
+
+// Future<void> updateGameScore(String userId, String gameName, int newScore) async {
+//   final userRef = FirebaseFirestore.instance.collection('users').doc(userId)
+//       .collection('game_scores').doc(gameName);
+
+//   // Get the existing highest score for this game
+//   final snapshot = await userRef.get();
+//   if (snapshot.exists) {
+//     final currentHighestScore = snapshot.data()?['highest_score'] ?? 0;
+//     if (newScore > currentHighestScore) {
+//       // Update the highest score if the new score is higher
+//       await userRef.set({'highest_score': newScore});
+//       print('Highest score for $gameName updated to $newScore');
+//     }
+//   } else {
+//     // If the game document doesn't exist, create it with the new score
+//     await userRef.set({'highest_score': newScore});
+//     print('New game added: $gameName with score $newScore');
+//   }
+// }
+
+// // Usage:
+// updateGameScore('user_id_here', 'game_1', 120); // Example usage to update game score
