@@ -6,76 +6,11 @@ import 'alphabet_match.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
 import 'alphabet_prac.dart';
 import 'package:playfulingo/HomePage/dash.dart';
-import 'package:playfulingo/Games/memory_matching.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:playfulingo/Firebase/firebase_functions.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 
-class GameItem extends StatelessWidget {
-  final String title;
-  final String image;
-  final Widget nextScreen;
 
-  const GameItem(
-      {super.key,
-      required this.title,
-      required this.image,
-      required this.nextScreen});
-
-  @override
-  Widget build(BuildContext context) {
-    
-    return ElevatedButton(
-      onPressed: () {
-        // Navigate to the desired screen when the button is pressed
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => nextScreen,
-          ),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(image),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.white.withOpacity(0.5),
-              BlendMode.lighten,
-            ),
-          ),
-          border: Border.all(color: Colors.black, width: 0.0),
-          borderRadius: BorderRadius.circular(20.0),
-          gradient: LinearGradient(
-            colors: [Colors.blue, Colors.white, Colors.red],
-          ),
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: Colors.red,
-              fontSize: 30.0,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold,
-              shadows: [
-                Shadow(
-                  blurRadius: 4.0,
-                  color: Colors.black,
-                  offset: Offset(2.0, 2.0),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 
 
@@ -84,6 +19,17 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final currentUser = FirebaseAuth.instance.currentUser;
+     return FutureBuilder<List<String>>(
+      future: fetchCompletedLessons(currentUser?.email ?? ''),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // Loading indicator while fetching data
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          final completedLessons = Set.from(snapshot.data ?? []);
+
     return Scaffold(
       appBar: AppBar(
          iconTheme: IconThemeData(
@@ -114,33 +60,38 @@ class GameScreen extends StatelessWidget {
             children: <Widget>[
                const GameItem(
               title: 'Multiple Choice',
-              image: 'assets/multiple-choice.png',
+              unlockedImage: 'assets/multiple-choice.png',
+              lockedImage:  'assets/lock.png'  ,
               nextScreen: multipleChoice(),
+               isUnlocked: true, 
             ),
             GameItem(
                 title: 'Fill In The Blanks',
-                image: 'assets/fill_in_the blank.png',
-                nextScreen: FillInTheBlank()
+               unlockedImage:  'assets/fill_in_the blank.png'  ,
+               lockedImage:  'assets/lock.png'  ,
+                nextScreen: FillInTheBlank(),
+                 isUnlocked: true, 
             ),
             GameItem(
-                title: 'Yes Or No',
-                image: 'assets/yes_or_no.png',
-                nextScreen: YesNoGame()
+                title: 'yes_or_no',
+                unlockedImage: 'assets/yes_or_no.png',
+                lockedImage:    'assets/lock.png' ,
+                nextScreen: YesNoGame(),
+                 isUnlocked: true, 
             ),
             GameItem(
               title: 'Alphabet Drag Drop Match',
-              image: 'assets/flashcard.png',
-              nextScreen: ASLMatchingGame()
+              unlockedImage: 'assets/flashcard.png' ,
+              lockedImage:   'assets/lock.png' ,
+              nextScreen: ASLMatchingGame(),
+               isUnlocked: completedLessons.contains('x3BsaHPxcvmBoQLroe0I'), 
             ),
               GameItem(
                 title: 'Snap and Prac',
-                image: 'assets/learn_bg.png',
-                nextScreen: CameraScreen()
-            ),
-            GameItem(
-                title: 'Memory Matching',
-                image: 'assets/memory-matching.png',
-                nextScreen: MemoryMatchingGame()
+                unlockedImage: 'assets/learn_bg.png',
+                lockedImage:   'assets/lock.png' ,
+                nextScreen: CameraScreen(),
+                 isUnlocked: completedLessons.contains('x3BsaHPxcvmBoQLroe0I'), 
             ),
          
             ElevatedButton(
@@ -166,17 +117,94 @@ class GameScreen extends StatelessWidget {
     ),
     primary: Colors.orange[300], // Background color
     onPrimary: Colors.blue, // Text color
-  ),
-),
-            
-            ],
+              ),),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+class GameItem extends StatelessWidget {
+  final String title;
+  final String? unlockedImage;
+  final String? lockedImage;
+  final Widget nextScreen;
+  final bool isUnlocked;
+
+  const GameItem({
+    required this.title,
+    required this.unlockedImage,
+    required this.lockedImage,
+    required this.nextScreen,
+    required this.isUnlocked,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: isUnlocked
+          ? () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => nextScreen,
+                ),
+              );
+            }
+          : null,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(isUnlocked ? unlockedImage! : lockedImage!),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.5),
+              BlendMode.lighten,
+            ),
+          ),
+          border: Border.all(color: Colors.black, width: 0.0),
+          borderRadius: BorderRadius.circular(20.0),
+          gradient: LinearGradient(
+            colors: [Colors.blue, Colors.white, Colors.red],
           ),
         ),
+        child: isUnlocked
+            ? Center(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 30.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 4.0,
+                        color: Colors.black,
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Center(
+                child: Icon(
+                  Icons.lock,
+                  size: 40,
+                  color: Colors.black87,
+                ),
+              ),
       ),
     );
   }
 }
-
-
-
-
