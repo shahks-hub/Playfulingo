@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:playfulingo/StartUp/login_prompt.dart';
 import 'package:playfulingo/HomePage/dash.dart'; // Assuming you've created this file.
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -110,44 +109,11 @@ class _SignupPageState extends State<SignupPage> {
                             try {
                               final userCredential =
                                   await _auth.createUserWithEmailAndPassword(
-                                email: email,
-                                password: password,
-                              );
-
-                              // If user creation is successful, add user details to Firestore
-                              await FirebaseFirestore.instance
-                                  .collection('users')
-                                  .doc(userCredential.user!.uid)
-                                  .set({
-                                'nickname': nicknameController.text,
-                                'email': email,
-                                'user_level': "1",
-                                'completed_lessons': [],
-                              });
-
-                              List<String> initialGameScores = [
-                                'abc_drop',
-                                'fill_blanks',
-                                'multiple_choice',
-                                'snap_recog',
-                                'yes_no',
-                              ];
-
-                              for (var gameName in initialGameScores) {
-                                await FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(userCredential.user!.uid)
-                                    .collection('game_scores')
-                                    .doc(gameName)
-                                    .set({
-                                  'highest_score': 0,
-                                });
-                              }
-
+                                      email: email, password: password);
                               Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => Dash()),
-                              );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Dash()));
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'weak-password') {
                                 _showSnackBar(context,
@@ -177,15 +143,14 @@ class _SignupPageState extends State<SignupPage> {
                       height: 20,
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPrompt()),
-                        );
-                      },
-                      child: const Text('Login'),
-                    )
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPrompt()),
+                          );
+                        },
+                        child: const Text('Login'))
                   ],
                 ),
               ],

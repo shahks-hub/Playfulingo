@@ -74,7 +74,7 @@ class _YesNoGameState extends State<YesNoGame> {
     });
   }
 
-  Future<void> showGameOverDialog() async {
+   Future<void> showGameOverDialog() async {
     return showDialog(
       context: context,
       builder: (context) {
@@ -92,8 +92,7 @@ class _YesNoGameState extends State<YesNoGame> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
-                Navigator.of(context)
-                    .pop(); // Return to the previous tab/screen
+                Navigator.of(context).pop(); // Return to the previous tab/screen
               },
               child: Text('Back'),
             ),

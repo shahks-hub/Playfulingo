@@ -26,19 +26,18 @@ class _BasicASLvideoState extends State<BasicASLvideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink[300],
-        iconTheme: IconThemeData(
-          color: Colors.white, // Change the color of the back arrow here
-        ),
+       backgroundColor: Colors.pink[300],
+         iconTheme: IconThemeData(
+      color: Colors.white, // Change the color of the back arrow here
+    ),
         title: const Text(
-          'ASL basics',
+          'ASL basics', 
           style: TextStyle(
             color: Colors.white,
             fontSize: 30.0,
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+            ),),
       ),
       body: Center(
         child: YoutubePlayerBuilder(
@@ -46,8 +45,12 @@ class _BasicASLvideoState extends State<BasicASLvideo> {
             controller: _controller,
             showVideoProgressIndicator: true,
             progressIndicatorColor: Colors.blueAccent,
-            onReady: () {},
-            onEnded: (YoutubeMetaData metaData) {},
+            onReady: () {
+              
+            },
+            onEnded: (YoutubeMetaData metaData) {
+             
+            },
           ),
           builder: (context, player) {
             return Column(
