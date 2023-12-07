@@ -115,6 +115,7 @@ class _SignupPageState extends State<SignupPage> {
                                   await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
                                   'nickname' : nicknameController.text,
                                     'email': email,
+                                    'user_level' : "1",
       
                                     });
                               Navigator.pushReplacement(
