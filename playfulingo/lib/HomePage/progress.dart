@@ -34,8 +34,10 @@ class ProgressPage extends StatelessWidget {
             final currentUser = FirebaseAuth.instance.currentUser!;
             final userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
 
+
             return StreamBuilder<DocumentSnapshot>(
               stream: userRef.snapshots(),
+              
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -46,6 +48,9 @@ class ProgressPage extends StatelessWidget {
                 } else {
                   final userData = snapshot.data!;
                   final completedLessons = List<String>.from(userData.get('completed_lessons') ?? []);
+                 
+                  
+
 
                   return FutureBuilder<QuerySnapshot>(
                     future: userRef.collection('game_scores').get(),

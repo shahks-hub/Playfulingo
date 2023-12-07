@@ -55,7 +55,7 @@ class _AbcTutorialState extends State<AbcTutorial> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Congratulations!'),
-          content: Text('Lesson completed and Snap Alphabet Drag Drop game unlocked!'),
+          content: Text('Lesson completed and Alphabet Drag Drop game unlocked!'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
