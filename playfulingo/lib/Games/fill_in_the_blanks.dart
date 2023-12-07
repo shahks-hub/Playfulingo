@@ -18,7 +18,7 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
       correctAnswer: 0, // Index of the correct picture (0 or 1).
       options: [
         "assets/hello.png", // Option 0: Replace with your image path.
-        "assets/good.png",  // Option 1: Replace with your image path.
+        "assets/good.png", // Option 1: Replace with your image path.
       ],
     ),
     FillInTheBlankItem(
@@ -26,7 +26,7 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
       correctAnswer: 1, // Index of the correct picture (0 or 1).
       options: [
         "assets/sorry.png", // Option 0: Replace with your image path.
-        "assets/good.png",  // Option 1: Replace with your image path.
+        "assets/good.png", // Option 1: Replace with your image path.
       ],
     ),
     FillInTheBlankItem(
@@ -34,7 +34,7 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
       correctAnswer: 1, // Index of the correct picture (0 or 1).
       options: [
         "assets/please.png", // Option 0: Replace with your image path.
-        "assets/bad.png",  // Option 1: Replace with your image path.
+        "assets/bad.png", // Option 1: Replace with your image path.
       ],
     ),
     FillInTheBlankItem(
@@ -42,23 +42,23 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
       correctAnswer: 1, // Index of the correct picture (0 or 1).
       options: [
         "assets/sorry.png", // Option 0: Replace with your image path.
-        "assets/please.png",  // Option 1: Replace with your image path.
+        "assets/please.png", // Option 1: Replace with your image path.
       ],
     ),
     FillInTheBlankItem(
       question: "__ for your help.",
       correctAnswer: 0, // Index of the correct picture (0 or 1).
       options: [
-        "assets/thank_you.png",  // Option 0: Replace with your image path.
-        "assets/sorry.png",    // Option 1: Replace with your image path.
+        "assets/thank_you.png", // Option 0: Replace with your image path.
+        "assets/sorry.png", // Option 1: Replace with your image path.
       ],
     ),
     FillInTheBlankItem(
       question: "I'm __ for the mistake",
       correctAnswer: 1, // Index of the correct picture (0 or 1).
       options: [
-        "assets/bad.png",  // Option 0: Replace with your image path.
-        "assets/sorry.png",    // Option 1: Replace with your image path.
+        "assets/bad.png", // Option 0: Replace with your image path.
+        "assets/sorry.png", // Option 1: Replace with your image path.
       ],
     ),
     // Add more quiz items here.
@@ -134,14 +134,17 @@ class _FillInTheBlankState extends State<FillInTheBlank> {
               ),
               const SizedBox(height: 20.0), // Add space below the question.
               Column(
-                children: List.generate(quizItems[currentQuestionIndex].options.length, (index) {
+                children: List.generate(
+                    quizItems[currentQuestionIndex].options.length, (index) {
                   return Column(
                     children: [
                       ElevatedButton(
                         onPressed: () => checkAnswer(index),
-                        child: Image.asset(quizItems[currentQuestionIndex].options[index]),
+                        child: Image.asset(
+                            quizItems[currentQuestionIndex].options[index]),
                       ),
-                      const SizedBox(height: 10.0), // Add space between answer options.
+                      const SizedBox(
+                          height: 10.0), // Add space between answer options.
                     ],
                   );
                 }),

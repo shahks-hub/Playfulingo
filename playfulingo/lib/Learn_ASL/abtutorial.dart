@@ -9,22 +9,50 @@ class AbcTutorial extends StatefulWidget {
 
 class _AbcTutorialState extends State<AbcTutorial> {
   final List<String> alphabets = [
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z'
   ];
   String selectedAlphabet = 'A';
   Map<String, bool> tappedAlphabets = {}; // To track tapped alphabets
-  bool isFirstTimeCompleted = true; // To track if lesson is completed for the first time
+  bool isFirstTimeCompleted =
+      true; // To track if lesson is completed for the first time
 
   Future<void> _addCompletedLesson(String lessonId) async {
     final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser != null) {
-      final userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+      final userRef =
+          FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
       try {
-        DocumentSnapshot<Map<String, dynamic>> userSnapshot = await userRef.get();
+        DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+            await userRef.get();
         if (userSnapshot.exists) {
-          List<dynamic> completedLessons = userSnapshot.data()?['completed_lessons'] ?? [];
+          List<dynamic> completedLessons =
+              userSnapshot.data()?['completed_lessons'] ?? [];
           if (!completedLessons.contains(lessonId)) {
             completedLessons.add(lessonId);
             await userRef.update({'completed_lessons': completedLessons});
@@ -55,7 +83,8 @@ class _AbcTutorialState extends State<AbcTutorial> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Congratulations!'),
-          content: Text('Lesson completed and Snap Alphabet Drag Drop game unlocked!'),
+          content:
+              Text('Lesson completed and Alphabet Drag Drop game unlocked!'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -103,7 +132,9 @@ class _AbcTutorialState extends State<AbcTutorial> {
               ),
               itemBuilder: (context, index) {
                 final currentAlphabet = alphabets[index];
-                final isTapped = tappedAlphabets.containsKey(currentAlphabet) ? tappedAlphabets[currentAlphabet]! : true;
+                final isTapped = tappedAlphabets.containsKey(currentAlphabet)
+                    ? tappedAlphabets[currentAlphabet]!
+                    : true;
                 return GestureDetector(
                   onTap: () {
                     setState(() {

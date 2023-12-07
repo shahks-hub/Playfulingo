@@ -4,7 +4,6 @@ import 'package:playfulingo/Learn_ASL/learn.dart';
 import 'package:gradient_like_css/gradient_like_css.dart';
 import 'progress.dart';
 
-
 class DashboardItem extends StatelessWidget {
   final String title;
   final String image;
@@ -32,7 +31,8 @@ class DashboardItem extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        backgroundColor: Colors.transparent, // Change to a transparent background
+        backgroundColor:
+            Colors.transparent, // Change to a transparent background
       ),
       child: Center(
         child: Container(
@@ -108,7 +108,8 @@ class Dash extends StatelessWidget {
                   crossAxisCount: 2, // Two columns
                   mainAxisSpacing: 20.0,
                   crossAxisSpacing: 20.0,
-                  childAspectRatio: 0.3, // Adjust the aspect ratio of the grid items
+                  childAspectRatio:
+                      0.3, // Adjust the aspect ratio of the grid items
                   children: <Widget>[
                     Center(
                       child: DashboardItem(
@@ -130,7 +131,8 @@ class Dash extends StatelessWidget {
             ),
           ),
           Container(
-            color: Colors.black, // Background color for the section containing the buttons
+            color: Colors
+                .black, // Background color for the section containing the buttons
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -138,11 +140,11 @@ class Dash extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                       Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ProgressPage(),
-          ),
-        );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProgressPage(),
+                        ),
+                      );
                     },
                     child: Text('Your Progress'),
                   ),
@@ -154,7 +156,8 @@ class Dash extends StatelessWidget {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text('App Instructions'),
-                            content: Text('This app is for us to learn ASL together! There is a learn section and another one with games and activities for you to practice. some games are locked until you complete corresponding lessons. '),
+                            content: Text(
+                                'This app is for us to learn ASL together! There is a learn section and another one with games and activities for you to practice. some games are locked until you complete corresponding lessons. '),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {

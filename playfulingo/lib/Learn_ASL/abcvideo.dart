@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:playfulingo/Firebase/firebase_functions.dart'; 
+import 'package:playfulingo/Firebase/firebase_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 class AbcVideoPage extends StatefulWidget {
   @override
@@ -23,7 +22,6 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
         mute: false,
       ),
     );
-    
   }
 
   @override
@@ -35,7 +33,7 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
           color: Colors.white, // Change the color of the back arrow here
         ),
         title: const Text(
-          'ABC Video', 
+          'ABC Video',
           style: TextStyle(
             color: Colors.white,
             fontSize: 30.0,
@@ -83,22 +81,24 @@ class _AbcVideoPageState extends State<AbcVideoPage> {
   Future<void> _addCompletedLesson(String lessonId) async {
     // Your function code from firebase_functions.dart
     final currentUser = FirebaseAuth.instance.currentUser;
-    bool isFirstTimeCompleted = true; // To track if lesson is completed for the first time
+    bool isFirstTimeCompleted =
+        true; // To track if lesson is completed for the first time
 
     if (currentUser != null) {
-      final userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+      final userRef =
+          FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
       // print("userred: $userRef");
       try {
-
-         DocumentSnapshot<Map<String, dynamic>> userSnapshot = await userRef.get();
+        DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+            await userRef.get();
         if (userSnapshot.exists) {
-          
-          List<dynamic> completedLessons = userSnapshot.data()?['completed_lessons'] ?? [];
+          List<dynamic> completedLessons =
+              userSnapshot.data()?['completed_lessons'] ?? [];
           if (!completedLessons.contains(lessonId)) {
             completedLessons.add(lessonId);
             await userRef.update({'completed_lessons': completedLessons});
             print('Lesson added to completed lessons');
-             if (isFirstTimeCompleted) {
+            if (isFirstTimeCompleted) {
               isFirstTimeCompleted = false;
               _showCompletionDialog(); // Show the completion dialog for the first time
             }
