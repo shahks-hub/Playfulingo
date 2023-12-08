@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:playfulingo/Games/fill_in_the_blanks.dart';
+import 'package:playfulingo/Games/memory_matching.dart';
 import 'package:playfulingo/Games/multiple_choice.dart';
 import 'package:playfulingo/Games/yes_no.dart';
 import 'alphabet_match.dart';
@@ -15,7 +16,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -148,9 +148,12 @@ class GameScreen extends StatelessWidget {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ASLMatchingGame(),
-                                  ));
+                                  if (completedLessons.contains('abc_tap')) {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => ASLMatchingGame(),
+                                    ));
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.transparent,
@@ -178,9 +181,12 @@ class GameScreen extends StatelessWidget {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CameraScreen(),
-                                  ));
+                                  if (completedLessons.contains('abc_video')) {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => CameraScreen(),
+                                    ));
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.transparent,
@@ -219,6 +225,31 @@ class GameScreen extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 20),
+                    GlassMorph(
+                      title: "GuessMatch",
+                      isUnlocked: true,
+                      lockedImage: 'assets/lock.png',
+                      mChild: Column(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => MemoryMatchingGame(),
+                              ));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              elevation: 0,
+                            ),
+                            child: Image.asset(
+                              "assets/ASLmatch.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
