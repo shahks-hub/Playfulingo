@@ -91,7 +91,7 @@ class _MemoryMatchingGameState extends State<MemoryMatchingGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Memory Matching Game'),
+        title: const Text('Memory Matching Game'),
         backgroundColor: Colors.blue,
       ),
       backgroundColor: const Color.fromARGB(255, 33, 208, 243),
@@ -100,11 +100,11 @@ class _MemoryMatchingGameState extends State<MemoryMatchingGame> {
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Congratulations! You won!',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: resetGame,
                     child: Text('Play Again'),
@@ -119,7 +119,7 @@ class _MemoryMatchingGameState extends State<MemoryMatchingGame> {
                 ],
               )
             : GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                 ),
                 itemCount: shuffledImages.length,
