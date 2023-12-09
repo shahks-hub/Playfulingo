@@ -11,7 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:playfulingo/Firebase/firebase_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:playfulingo/HomePage/glass_morph.dart';
-// import 'package:playfulingo/Games/gesture.dart';
+import 'package:playfulingo/Games/gesture.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GameScreen extends StatelessWidget {
