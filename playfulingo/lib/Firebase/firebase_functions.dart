@@ -75,3 +75,4 @@ Future<void> updateGameScore(String gameName, int newScore) async {
     // Handle error accordingly
   }
 }
+

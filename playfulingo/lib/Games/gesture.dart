@@ -4,8 +4,8 @@
 // import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
 // import 'package:camera/camera.dart';
-// //import 'package:image/image.dart' as img;
-// //import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
+// import 'package:image/image.dart' as img;
+// import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 
 // class GestureScreen extends StatefulWidget {
 //   const GestureScreen({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@
 
 //   // loads the model for detection
 //   Future<void> loadModel() async {
-//     // final interpreter = await tfl.Interpreter.fromAsset('assets/model.tflite');
+//     final interpreter = await tfl.Interpreter.fromAsset('assets/model.tflite');
 
 //     try {
 //       await Tflite.loadModel(
