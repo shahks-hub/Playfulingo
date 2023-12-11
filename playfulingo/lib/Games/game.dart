@@ -45,6 +45,18 @@ class GameScreen extends StatelessWidget {
                 ),
               ),
               backgroundColor: Colors.black,
+              actions: <Widget>[
+             IconButton(
+            icon: Icon(Icons.arrow_forward),
+            onPressed: () {
+              
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Dash()),
+              );
+            },
+          ),
+        ],
             ),
             body: Container(
               decoration: const BoxDecoration(
@@ -110,6 +122,7 @@ class GameScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+                        
                       ],
                     ),
                     const SizedBox(height: 20), // Add space between rows
@@ -200,30 +213,30 @@ class GameScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        GlassMorph(
-                          title: "Detector",
-                          lockedImage: 'assets/lock.png',
-                          isUnlocked: true,
-                          mChild: Column(
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const GestureScreen(),
-                                  ));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                ),
-                                child: Image.asset(
-                                  "assets/gesture.png",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // GlassMorph(
+                        //   title: "Detector",
+                        //   lockedImage: 'assets/lock.png',
+                        //   isUnlocked: true,
+                        //   mChild: Column(
+                        //     children: [
+                        //       ElevatedButton(
+                        //         onPressed: () {
+                        //           Navigator.of(context).push(MaterialPageRoute(
+                        //             builder: (context) => const GestureScreen(),
+                        //           ));
+                        //         },
+                        //         style: ElevatedButton.styleFrom(
+                        //           backgroundColor: Colors.transparent,
+                        //           elevation: 0,
+                        //         ),
+                        //         child: Image.asset(
+                        //           "assets/gesture.png",
+                        //           fit: BoxFit.cover,
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                     const SizedBox(height: 20),

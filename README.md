@@ -1,6 +1,11 @@
 # Playfulingo
 
-ASL made fun 
+
+Our app Playfulingo is an app to get people interested in American Sign Language. We have components to learn and games to practice your learning! 
+
+## Backend
+
+For our database we're using Firebase Cloud database Firestore, also using Firebase Authentication for Singing up and Logging in. That instance of the authentication of a particular user assigns an ID to each user. That id is used to fetch relevant information in Firestore and also perform read and write operations.
 
 ## Prerequisites
 
@@ -43,10 +48,50 @@ Finally, build and launch the app on your emulator or connected device:
 flutter run
 ```
 
-### 7. For android go to the Playfulingo firebase console:
-next look for the android app and go to settings and download the google.json file and place it in your flutter projects android/ folder. 
+## Project Structure:
 
-### 8. next run flutter pub get
+all code files are in lib folder and then the folder names correspond to the functionality. 
+ 
+
+## Responsibilites:
+
+### Sulav: 
+General styling of the app, implementing startup animated widget, games and learn homepage with google fonts and glassmorph libraries. Building and training a gesture recognition model with tensor flow lite and teachable. Also responsible for organizing the code files. 
+
+Relevant files: 
+- lib/Games/games.dart 
+- lib/Learn_ASL/learn.dart
+- lib/Games/gesture.dart(This file is commented out because there was a version issue running tensorlite on my end - Kasaf)
+-lib/HomePage/glass_morph.dart
+-lib/HomePage/learning_morph.dart
+
+### Jin: 
+Making the flashcards module in learning items. Also implemented most of the games in the games module. 
+
+Relevant files:
+- lib/Games/fill_in_the_blank.dart
+- lib/Games/yes_no.dart
+- lib/Games/multiple_choice.dart
+- lib/Games/memory_matching.dart
+- lib/Learn_ASL/flashcard.dart
+- lib/StartUp/animated_splash.dart
+- lib/StartUp/login_prompt.dart
+
+### Kasaf: 
+Setting up the backend and adding backend functionality, implementing the progress page and videos modules with youtube package in flutter. Also using hugging face model for image recognition to detect ASL signs. alphabet matching learning module along with it's corresponding practice game that unlocks after a user completes the lesson. 
+
+Relevant files: 
+- lib/Games/alphabet_prac.dart
+- lib/Games/alphabet_match.dart
+- lib/Learn_ASL/abcvideo.dart
+- lib/Learn_ASL/abtutorial.dart
+- lib/Learn_ASL/simpleaslvideo.dart
+- lib/HomePage/progress.dart
+- lib/Firebase/signup_page.dart
+
+
+
+
 
 
 
