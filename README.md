@@ -16,6 +16,14 @@ For our database we're using Firebase Cloud database Firestore, also using Fireb
 
 ## Setting Up and Running the Project
 
+-------
+### Check Releases for working app.  Explained below is the process to get it on your phone.
+-  Download the Playfulingo.apk from the release section
+-  Find the file in your device and it should give you the option to install.
+-  When installing, it might ask you for affirmation, if so click on 'More Details' and choose the "install anyway" option.
+-  Now the app will work as intended on your device. (for updates, redownloading newer apk versions can check for updating app itself)
+-------
+
 ### 1. Clone the Repository
 To clone this repository to your local machine, open your terminal and enter:
 ```
