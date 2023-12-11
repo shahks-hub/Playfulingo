@@ -4,8 +4,6 @@
 // import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
 // import 'package:camera/camera.dart';
-// import 'package:image/image.dart' as img;
-// import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 
 // class GestureScreen extends StatefulWidget {
 //   const GestureScreen({Key? key}) : super(key: key);
@@ -20,8 +18,12 @@
 //   List<dynamic> _recognitions = [];
 //   bool _modelLoaded = false;
 //   String _pickedImagePath = '';
+
+//   late List<CameraDescription> cameras;
 //   late CameraController _cameraController;
 //   bool _isCameraActive = false;
+//   int _frameCount = 0;
+//   int _selectedCameraIndex = 0;
 
 //   // gives resources and makes sure model is loaded only once
 //   @override
@@ -33,8 +35,6 @@
 
 //   // loads the model for detection
 //   Future<void> loadModel() async {
-//     final interpreter = await tfl.Interpreter.fromAsset('assets/model.tflite');
-
 //     try {
 //       await Tflite.loadModel(
 //         model: 'assets/model.tflite',
@@ -54,9 +54,28 @@
 //   Sets up the camera for stream
 //   */
 //   Future<void> setupCamera() async {
-//     final cameras = await availableCameras();
+//     cameras = await availableCameras();
 //     _cameraController = CameraController(cameras[0], ResolutionPreset.medium);
 //     await _cameraController.initialize();
+//   }
+
+//   /* 
+//   Allows user to switch cameras
+//   */
+//   void switchCamera() async {
+//     if (_isCameraActive) {
+//       // Stop the current camera stream
+//       stopCameraStream();
+
+//       // Get the list of available cameras
+
+//       // Switch to the next camera
+//       int newCameraIndex = _selectedCameraIndex == 0 ? 1 : 0;
+//       _selectedCameraIndex = newCameraIndex;
+//       _cameraController =
+//           CameraController(cameras[newCameraIndex], ResolutionPreset.medium);
+//       await _cameraController.initialize();
+//     }
 //   }
 
 //   /*
@@ -65,8 +84,9 @@
 //    */
 //   Future<void> startCameraStream() async {
 //     if (!_isCameraActive) {
-//       await _cameraController.startImageStream((CameraImage image) {
-//         if (_modelLoaded) {
+//       await _cameraController.startImageStream((image) {
+//         if (_frameCount % 20 == 0) {
+//           _frameCount = 0;
 //           runModelOnFrame(image);
 //         }
 //       });
@@ -203,94 +223,93 @@
 //         appBar: AppBar(
 //           title: const Text('TFLite Gesture Detection'),
 //         ),
-//         body: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//               if (_recognitions.isNotEmpty && _modelLoaded)
-//                 Padding(
-//                   padding: const EdgeInsets.all(16.0),
+//         body: SingleChildScrollView(
+//             child: Container(
+//                 height: MediaQuery.of(context).size.height,
+//                 child: Center(
 //                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
 //                     children: [
-//                       // conditions for displaying the correct aspect
-//                       if (_isCameraActive)
-//                         Container(
-//                           width: double
-//                               .infinity, // Take up the entire width of the screen
-//                           height: double
-//                               .infinity, // Take up the entire height of the screen
-//                           child: _isCameraActive
-//                               ? AspectRatio(
-//                                   aspectRatio:
-//                                       _cameraController.value.aspectRatio,
-//                                   child: CameraPreview(_cameraController),
-//                                 )
-//                               : SizedBox(),
+//                       if (_recognitions.isNotEmpty && _modelLoaded)
+//                         Padding(
+//                           padding: const EdgeInsets.all(16.0),
+//                           child: Column(
+//                             children: [
+//                               // conditions for displaying the correct aspect
+//                               if (_isCameraActive)
+//                                 CameraPreview(_cameraController),
+//                               if (!_isCameraActive &&
+//                                   _pickedImagePath.isNotEmpty)
+//                                 Image.file(File(_pickedImagePath), height: 200),
+//                               const SizedBox(height: 16),
+//                               Text(
+//                                 'Detected Sign: ${_recognitions[0]['label']}', // index 0 means the highest confidence label
+//                                 style: const TextStyle(
+//                                     fontSize: 20, fontWeight: FontWeight.bold),
+//                                 textAlign: TextAlign.center,
+//                               ),
+//                               const SizedBox(height: 16),
+//                               Text(
+//                                 'Confidence Level: ${(_recognitions[0]['confidence'] * 100).toStringAsFixed(2)}%',
+//                                 style: const TextStyle(fontSize: 16),
+//                                 textAlign: TextAlign.center,
+//                               ),
+//                               const SizedBox(height: 16),
+//                               LinearProgressIndicator(
+//                                 value: _recognitions[0]['confidence'],
+//                                 minHeight: 10,
+//                                 backgroundColor: Colors.grey[300]!,
+//                                 valueColor: const AlwaysStoppedAnimation<Color>(
+//                                     Colors.blue),
+//                               ),
+//                             ],
+//                           ),
 //                         ),
-//                       if (!_isCameraActive && _pickedImagePath.isNotEmpty)
-//                         Image.file(File(_pickedImagePath), height: 200),
-//                       const SizedBox(height: 16),
-//                       Text(
-//                         'Detected Sign: ${_recognitions[0]['label']}', // index 0 means the highest confidence label
-//                         style: const TextStyle(
-//                             fontSize: 20, fontWeight: FontWeight.bold),
-//                         textAlign: TextAlign.center,
+//                       ElevatedButton(
+//                         onPressed: () {
+//                           // Clear previous data
+//                           setState(() {
+//                             _pickedImagePath = '';
+//                             _recognitions = [];
+//                           });
+//                           _pickImage();
+//                         },
+//                         child: const Row(
+//                           mainAxisSize: MainAxisSize.min,
+//                           children: [
+//                             Icon(Icons.image),
+//                             SizedBox(width: 8),
+//                             Text('Try Gesture Detection!'),
+//                           ],
+//                         ),
 //                       ),
 //                       const SizedBox(height: 16),
-//                       Text(
-//                         'Confidence Level: ${(_recognitions[0]['confidence'] * 100).toStringAsFixed(2)}%',
-//                         style: const TextStyle(fontSize: 16),
-//                         textAlign: TextAlign.center,
+//                       ElevatedButton(
+//                         onPressed: () {
+//                           // Clear previous data
+//                           setState(() {
+//                             _pickedImagePath = '';
+//                             _recognitions = [];
+//                           });
+//                           _isCameraActive
+//                               ? stopCameraStream()
+//                               : startCameraStream();
+//                         },
+//                         child: Text(
+//                             _isCameraActive ? 'Stop Camera' : 'Start Camera'),
 //                       ),
-//                       const SizedBox(height: 16),
-//                       LinearProgressIndicator(
-//                         value: _recognitions[0]['confidence'],
-//                         minHeight: 10,
-//                         backgroundColor: Colors.grey[300]!,
-//                         valueColor:
-//                             const AlwaysStoppedAnimation<Color>(Colors.blue),
+//                       ElevatedButton(
+//                         onPressed: switchCamera,
+//                         child: const Text('Switch Camera'),
 //                       ),
+//                       if (!_modelLoaded) const SizedBox(height: 16),
+//                       if (!_modelLoaded) // shows loading status indicating there is a problem
+//                         const Center(
+//                           child: CircularProgressIndicator(),
+//                         ),
 //                     ],
 //                   ),
-//                 ),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   // Clear previous data
-//                   setState(() {
-//                     _pickedImagePath = '';
-//                     _recognitions = [];
-//                   });
-//                   _pickImage();
-//                 },
-//                 child: const Row(
-//                   mainAxisSize: MainAxisSize.min,
-//                   children: [
-//                     Icon(Icons.image),
-//                     SizedBox(width: 8),
-//                     Text('Try Gesture Detection!'),
-//                   ],
-//                 ),
-//               ),
-//               const SizedBox(height: 16),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   // Clear previous data
-//                   setState(() {
-//                     _pickedImagePath = '';
-//                     _recognitions = [];
-//                   });
-//                   _isCameraActive ? stopCameraStream() : startCameraStream();
-//                 },
-//                 child: Text(_isCameraActive ? 'Stop Camera' : 'Start Camera'),
-//               ),
-//               if (!_modelLoaded) const SizedBox(height: 16),
-//               if (!_modelLoaded) // shows loading status indicating there is a problem
-//                 const Center(
-//                   child: CircularProgressIndicator(),
-//                 ),
-//             ],
-//           ),
-//         ));
+//                 ))));
 //   }
 // }
