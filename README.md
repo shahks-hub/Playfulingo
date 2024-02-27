@@ -16,6 +16,14 @@ For our database we're using Firebase Cloud database Firestore, also using Fireb
 
 ## Setting Up and Running the Project
 
+-------
+### Check Releases for working app.  Explained below is the process to get it on your phone.
+-  Download the Playfulingo.apk from the release section
+-  Find the file in your device and it should give you the option to install.
+-  When installing, it might ask you for affirmation, if so click on 'More Details' and choose the "install anyway" option.
+-  Now the app will work as intended on your device. (for updates, redownloading newer apk versions can check for updating app itself)
+-------
+
 ### 1. Clone the Repository
 To clone this repository to your local machine, open your terminal and enter:
 ```
@@ -88,6 +96,8 @@ Relevant files:
 - lib/Learn_ASL/simpleaslvideo.dart
 - lib/HomePage/progress.dart
 - lib/Firebase/signup_page.dart
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/917208827?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Screen Recording 2024-02-26 at 3.03 (Copy)"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
 
 
 
