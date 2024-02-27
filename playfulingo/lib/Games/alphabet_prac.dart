@@ -8,6 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'game.dart';
 import 'package:playfulingo/Firebase/firebase_functions.dart';
 
+
 class CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -16,6 +17,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   final ImagePicker _picker = ImagePicker();
   int score = 0; // Initialize score
+  String? base64_image; 
   @override
   void initState() {
     super.initState();
@@ -31,41 +33,48 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
-  Future<List<dynamic>> query(String filename) async {
-    print("Function 'query' called");
+ 
 
-    final File imageFile = File(filename);
-    print('File located at: ${imageFile.path}');
-    final imageBytes = await imageFile.readAsBytes();
-    final String apiToken = dotenv.env['API_TOKEN'] ?? '';
-
-    final apiUrl = Uri.parse(
-        "https://api-inference.huggingface.co/models/dima806/asl_alphabet_image_detection");
-    print("Function 'query' - API URL: $apiUrl");
-
-    try {
-      print("Function 'query' - making POST request");
-      final response = await http.post(
-        apiUrl,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $apiToken',
-          HttpHeaders.contentTypeHeader: "application/json",
-        },
-        body: imageBytes,
-      );
-
-      if (response.statusCode == 200) {
-        // Parse the response
-        final List<dynamic> result = json.decode(response.body);
-        print("Function 'query' - API response: $result");
-        return result;
-      } else {
-        throw Exception('Failed to query the API');
+ Future<List<dynamic>> queryOpenAI(String imageUrl) async {
+  final apiUrl = Uri.parse("https://api.openai.com/v1/chat/completions");
+  
+  final api_key = dotenv.env['OPENAI_API_KEY'];
+  
+  final headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer $api_key",
+  };
+    
+  final payload = {
+    "model": "gpt-4-vision-preview",
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "What’s in this image?",
+          },
+          {
+            "type": "image_url",
+            "image_url": {"url": imageUrl},
+          },
+        ],
       }
-    } catch (e) {
-      throw Exception('Failed to perform API call: $e');
-    }
+    ],
+    "max_tokens": 300,
+  };
+  //  print("headers: $headers , body is: $payload");
+  final response = await http.post(apiUrl, headers: headers, body: json.encode(payload));
+
+  if (response.statusCode == 200) {
+    final List<dynamic> result = json.decode(response.body);
+    return result;
+  } else {
+    throw Exception('Failed to query the OpenAI API');
   }
+}
+
 
   Future<void> _getImageFromCamera() async {
     try {
@@ -76,9 +85,11 @@ class _CameraScreenState extends State<CameraScreen> {
             await _picker.pickImage(source: ImageSource.camera);
         if (image != null) {
           try {
-            print("Trying to query API with image: ${image.path}");
-            final result = await query(image.path);
-            print("API Result: $result");
+            final imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg";
+            // final imageUrl = "data:image/jpeg;base64,${base64_image}";
+            final result = await queryOpenAI(imageUrl);
+        
+            
             setState(() {
               score++; // Increment score on successful image capture
             });
@@ -169,7 +180,6 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 }
-
 class ResultScreen extends StatefulWidget {
   final List<dynamic> result;
   final int score;
@@ -183,11 +193,6 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
-    List<String> top5Labels = widget.result
-        .sublist(0, widget.result.length > 5 ? 5 : widget.result.length)
-        .map((item) => item['label'] as String)
-        .toList();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -212,14 +217,27 @@ class _ResultScreenState extends State<ResultScreen> {
                 color: Colors.purple[100],
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Text(
-                'Top 5 Results: $top5Labels',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple[800],
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    'Results:',
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.purple[800],
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  // Display the entire result
+                  for (var message in widget.result)
+                    Text(
+                      '${message['role']}: ${message['content'][0]['text']}',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                ],
               ),
             ),
             SizedBox(height: 35),

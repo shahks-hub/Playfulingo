@@ -138,7 +138,7 @@ class _ASLMatchingGameState extends State<ASLMatchingGame> {
                   data: letter,
                   child: ASLImage(
                     imagePath: score[letter] == true
-                        ? 'assets/AR.jpg'
+                        ? 'assets/learn_bg.png'
                         : letterData[letter]!,
                   ),
                   feedback: ASLImage(imagePath: letterData[letter]!),

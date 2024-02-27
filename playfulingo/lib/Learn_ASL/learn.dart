@@ -55,8 +55,8 @@ class LearnboardItem extends StatelessWidget {
           child: Text(
             title,
             style: const TextStyle(
-              color: Colors.red,
-              fontSize: 35.0,
+              color: Colors.orange,
+              fontSize: 40.0,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.bold,
               shadows: [
@@ -87,7 +87,7 @@ class Learn extends StatelessWidget {
       color: Colors.blue, // Change the color of the back arrow here
     ),
         title: const Text(
-          'Learn tab', 
+          'Learn ASL', 
           style: TextStyle(
             color: Colors.orange,
             fontSize: 30.0,
@@ -100,26 +100,27 @@ class Learn extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          gradient: linearGradient(45, ['red', 'green', 'blue']),
+          gradient: linearGradient(40, ['pink', 'green', 'blue']),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(20.0),
           child: GridView.count(
-            crossAxisCount: 2, // Two columns
+            crossAxisCount: 1, // Two columns
             mainAxisSpacing: 20.0,
-            crossAxisSpacing: 20.0,
+            crossAxisSpacing: 30.0,
+            childAspectRatio: 1.8,
             children: <Widget>[
               LearnboardItem(
-                title: 'Abctutorial',
-                image: 'assets/learn_bg.png',
+                title: 'Abc Tap Tutorial',
+                image: 'assets/gamebg.jpg',
                 nextScreen: AbcTutorial()),
               LearnboardItem(
-                  title: 'abc video',
+                  title: 'ABC Video',
                   image: 'assets/practice.png',
                   nextScreen: AbcVideoPage()),
               LearnboardItem(
-                  title: 'basic asl video',
-                  image: 'assets/arbg.png',
+                  title: 'ASL Basics Video',
+                  image: 'assets/memory.png',
                   nextScreen: BasicASLvideo()),
              
             ],

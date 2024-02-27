@@ -71,8 +71,8 @@ class GameItem extends StatelessWidget {
               child: Text(
                 title,
                 style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 35.0,
+                  color: Colors.orange,
+                  fontSize: 40.0,
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.bold,
                   shadows: [
@@ -115,7 +115,7 @@ class GameScreen extends StatelessWidget {
               ),
               title: const Center(
                 child: Text(
-                  'Practice make perfect',
+                  'Practice',
                   style: TextStyle(
                     color: Colors.orange,
                     fontSize: 30.0,
@@ -144,25 +144,27 @@ class GameScreen extends StatelessWidget {
                 gradient: linearGradient(45, ['blue', 'green', 'blue']),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20.0),
                 child: GridView.count(
-                  crossAxisCount: 2,
+                  crossAxisCount: 1,
                   mainAxisSpacing: 20.0,
                   crossAxisSpacing: 20.0,
+                  childAspectRatio: 1.2,
                   children: <Widget>[
                     GameItem(
-                      title: 'Alphabet Drag Drop Match',
+                      title: 'Alphabet Drag Drop',
                       unlockedImage: 'assets/flashcard.png',
                       lockedImage: 'assets/lock.png',
                       nextScreen: ASLMatchingGame(),
                       isUnlocked: true,
                     ),
                     GameItem(
-                      title: 'Alphabet prac',
-                      unlockedImage: 'assets/flashcard.png',
+                      title: 'Alphabet Snap',
+                      unlockedImage: 'assets/learnbg2.jpg',
                       lockedImage: 'assets/lock.png',
                       nextScreen: CameraScreen(),
                       isUnlocked: completedLessons.contains('abc_video'),
+                      // isUnlocked: true,
                     ),
                   ],
                 ),

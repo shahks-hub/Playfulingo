@@ -14,7 +14,7 @@ Future<List<String>> fetchCompletedLessons(String userEmail) async {
 
     if (userSnapshot.docs.isNotEmpty) {
       final userData = userSnapshot.docs.first.data();
-      print("user data: $userData ");
+      // print("user data: $userData ");
 
       // Assuming completed_lessons is a list of strings
       List<dynamic> completedLessonsRefs = userData['completed_lessons'] ?? [];
@@ -24,7 +24,7 @@ Future<List<String>> fetchCompletedLessons(String userEmail) async {
           .addAll(completedLessonsRefs.map((ref) => ref.toString()));
     }
 
-    print("completed: $completedLessons");
+    // print("completed: $completedLessons");
     return completedLessons;
   } catch (e) {
     print('Error fetching completed lessons: $e');
